@@ -1,9 +1,4 @@
 {
-  ".agents/mcp_config.json": {
-    "mtime": 1780498562.141194,
-    "ast_hash": "5b65c3b8ce5dcadf6d4b888e2a9b1758",
-    "semantic_hash": "5b65c3b8ce5dcadf6d4b888e2a9b1758"
-  },
   "eslint.config.mjs": {
     "mtime": 1780502990.9762785,
     "ast_hash": "dfa1f5f6a7037bf39dc510f30b180002",
@@ -15,9 +10,9 @@
     "semantic_hash": "9b77af189a21a7a64e4bd7a426f64176"
   },
   "package.json": {
-    "mtime": 1780503489.1108797,
-    "ast_hash": "350e6e1ab55d506ae8499f9403946917",
-    "semantic_hash": "350e6e1ab55d506ae8499f9403946917"
+    "mtime": 1785962811.1679752,
+    "ast_hash": "05ce27342edac0c6e9c167b95f061837",
+    "semantic_hash": "05ce27342edac0c6e9c167b95f061837"
   },
   "postcss.config.mjs": {
     "mtime": 1780502990.9768562,
@@ -185,9 +180,9 @@
     "semantic_hash": "f4da3048f145b48528a01f3b6d3f97fd"
   },
   "src/lib/db.ts": {
-    "mtime": 1780503626.0626142,
-    "ast_hash": "321fe058e354fe47927f10902093fc9d",
-    "semantic_hash": "321fe058e354fe47927f10902093fc9d"
+    "mtime": 1785963245.5340207,
+    "ast_hash": "c136756556d560a1b50532ced40ef073",
+    "semantic_hash": "c136756556d560a1b50532ced40ef073"
   },
   "src/lib/utils.ts": {
     "mtime": 1780505780.5728245,
