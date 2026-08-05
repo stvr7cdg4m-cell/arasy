@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import OpenAI from "openai";
+import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 import { Product, Goal, Alert } from "@/generated/prisma/client";
 
 interface ChatMessage {
@@ -8,160 +8,139 @@ interface ChatMessage {
   content: string;
 }
 
-// Inicializar el cliente de OpenAI si existe la clave
-const openai = process.env.OPENAI_API_KEY
-  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+// Inicializar el cliente de Gemini si existe la clave
+const genAI = (process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY)
+  ? new GoogleGenerativeAI(process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || "")
   : null;
 
-// Herramientas (Tools) de OpenAI para interactuar con la base de datos
-const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
+// Herramientas (Tools) de Gemini para interactuar con la base de datos
+const functionDeclarations: any[] = [
   {
-    type: "function",
-    function: {
-      name: "get_products_list",
-      description: "Obtiene una lista de productos con filtros opcionales (decisión, clasificación, categoría). Útil para responder preguntas generales de inventario, cuáles liquidar, cuáles empujar, o listar SKUs.",
-      parameters: {
-        type: "object",
-        properties: {
-          decision: { 
-            type: "string", 
-            enum: ["EMPUJAR", "MANTENER", "LIQUIDAR", "EXCLUIR"],
-            description: "Filtrar por la decisión recomendada sobre el producto."
-          },
-          classification: { 
-            type: "string", 
-            enum: ["ANCLA", "ACOMPAÑANTE", "LASTRE"],
-            description: "Filtrar por la clasificación del producto."
-          },
-          category: { 
-            type: "string",
-            description: "Filtrar por categoría del producto (ej. Electronics)."
-          }
+    name: "get_products_list",
+    description: "Obtiene una lista de productos con filtros opcionales (decisión, clasificación, categoría). Útil para responder preguntas generales de inventario, cuáles liquidar, cuáles empujar, o listar SKUs.",
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        decision: { 
+          type: SchemaType.STRING, 
+          enum: ["EMPUJAR", "MANTENER", "LIQUIDAR", "EXCLUIR"],
+          description: "Filtrar por la decisión recomendada sobre el producto."
+        },
+        classification: { 
+          type: SchemaType.STRING, 
+          enum: ["ANCLA", "ACOMPAÑANTE", "LASTRE"],
+          description: "Filtrar por la clasificación del producto."
+        },
+        category: { 
+          type: SchemaType.STRING,
+          description: "Filtrar por categoría del producto (ej. Electronics)."
         }
       }
     }
   },
   {
-    type: "function",
-    function: {
-      name: "get_product_detail",
-      description: "Obtiene la información detallada de un producto específico mediante su SKU. Retorna costo, precio, stock, aging, clasificación, decisión y alertas asociadas.",
-      parameters: {
-        type: "object",
-        properties: {
-          sku: { 
-            type: "string", 
-            description: "El SKU único del producto (ej. SKU-101)." 
-          }
+    name: "get_product_detail",
+    description: "Obtiene la información detallada de un producto específico mediante su SKU. Retorna costo, precio, stock, aging, clasificación, decisión y alertas asociadas.",
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        sku: { 
+          type: SchemaType.STRING, 
+          description: "El SKU único del producto (ej. SKU-101)." 
+        }
+      },
+      required: ["sku"]
+    }
+  },
+  {
+    name: "get_goals",
+    description: "Obtiene todas las metas y objetivos comerciales del período actual (ventas objetivo, margen objetivo) agrupados por categoría o globales.",
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {}
+    }
+  },
+  {
+    name: "get_alerts",
+    description: "Obtiene la lista de alertas operativas críticas no resueltas (ej. quiebres de stock o sobrestock) y sus descripciones.",
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {}
+    }
+  },
+  {
+    name: "get_inventory_summary",
+    description: "Obtiene agregados financieros del inventario completo (capital inmovilizado en costo, cobertura promedio en días, total de unidades y conteo de productos para liquidar).",
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {}
+    }
+  },
+  {
+    name: "execute_commercial_decision",
+    description: "Ejecuta una acción o decisión comercial real en la base de datos para un SKU específico (reponer/empujar, liquidar o excluir). Esto altera el inventario físico, crea ventas simuladas para liquidaciones y resuelve sus alertas asociadas.",
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        sku: {
+          type: SchemaType.STRING,
+          description: "El SKU del producto sobre el cual actuar (ej: SKU-101)."
         },
-        required: ["sku"]
-      }
-    }
-  },
-  {
-    type: "function",
-    function: {
-      name: "get_goals",
-      description: "Obtiene todas las metas y objetivos comerciales del período actual (ventas objetivo, margen objetivo) agrupados por categoría o globales.",
-      parameters: {
-        type: "object",
-        properties: {}
-      }
-    }
-  },
-  {
-    type: "function",
-    function: {
-      name: "get_alerts",
-      description: "Obtiene la lista de alertas operativas críticas no resueltas (ej. quiebres de stock o sobrestock) y sus descripciones.",
-      parameters: {
-        type: "object",
-        properties: {}
-      }
-    }
-  },
-  {
-    type: "function",
-    function: {
-      name: "get_inventory_summary",
-      description: "Obtiene agregados financieros del inventario completo (capital inmovilizado en costo, cobertura promedio en días, total de unidades y conteo de productos para liquidar).",
-      parameters: {
-        type: "object",
-        properties: {}
-      }
-    }
-  },
-  {
-    type: "function",
-    function: {
-      name: "execute_commercial_decision",
-      description: "Ejecuta una acción o decisión comercial real en la base de datos para un SKU específico (reponer/empujar, liquidar o excluir). Esto altera el inventario físico, crea ventas simuladas para liquidaciones y resuelve sus alertas asociadas.",
-      parameters: {
-        type: "object",
-        properties: {
-          sku: {
-            type: "string",
-            description: "El SKU del producto sobre el cual actuar (ej: SKU-101)."
-          },
-          decision: {
-            type: "string",
-            enum: ["EMPUJAR", "LIQUIDAR", "EXCLUIR"],
-            description: "La decisión a ejecutar: EMPUJAR (reponer stock), LIQUIDAR (rebajar stock y registrar ventas) o EXCLUIR (excluir de venta)."
-          },
-          quantity: {
-            type: "integer",
-            description: "La cantidad de unidades asociadas a la decisión (ej. cantidad a reponer o a liquidar)."
-          },
-          discount: {
-            type: "integer",
-            description: "Opcional. Si la decisión es LIQUIDAR, el porcentaje de descuento a aplicar (ej. 20)."
-          }
+        decision: {
+          type: SchemaType.STRING,
+          enum: ["EMPUJAR", "LIQUIDAR", "EXCLUIR"],
+          description: "La decisión a ejecutar: EMPUJAR (reponer stock), LIQUIDAR (rebajar stock y registrar ventas) o EXCLUIR (excluir de venta)."
         },
-        required: ["sku", "decision", "quantity"]
-      }
+        quantity: {
+          type: SchemaType.INTEGER,
+          description: "La cantidad de unidades asociadas a la decisión (ej. cantidad a reponer o a liquidar)."
+        },
+        discount: {
+          type: SchemaType.INTEGER,
+          description: "Opcional. Si la decisión es LIQUIDAR, el porcentaje de descuento a aplicar (ej. 20)."
+        }
+      },
+      required: ["sku", "decision", "quantity"]
     }
   },
   {
-    type: "function",
-    function: {
-      name: "save_mix_simulation_scenario",
-      description: "Guarda un escenario completo de simulación del Mix Optimizer en la base de datos SQLite. Calcula automáticamente el margen ponderado y el revenue del mix a partir de los overrides provistos.",
-      parameters: {
-        type: "object",
-        properties: {
-          scenario_name: {
-            type: "string",
-            description: "El nombre descriptivo para identificar el escenario de simulación (ej. Ajuste ROG Strix G16)."
-          },
+    name: "save_mix_simulation_scenario",
+    description: "Guarda un escenario completo de simulación del Mix Optimizer en la base de datos SQLite. Calcula automáticamente el margen ponderado y el revenue del mix a partir de los overrides provistos.",
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        scenario_name: {
+          type: SchemaType.STRING,
+          description: "El nombre descriptivo para identificar el escenario de simulación (ej. Ajuste ROG Strix G16)."
+        },
+        items: {
+          type: SchemaType.ARRAY,
+          description: "Arreglo de productos con sus respectivos overrides. Los productos no incluidos mantendrán sus valores actuales en la base de datos.",
           items: {
-            type: "array",
-            description: "Arreglo de productos con sus respectivos overrides. Los productos no incluidos mantendrán sus valores actuales en la base de datos.",
-            items: {
-              type: "object",
-              properties: {
-                sku: {
-                  type: "string",
-                  description: "El SKU del producto."
-                },
-                price: {
-                  type: "number",
-                  description: "Opcional. El precio simulado."
-                },
-                cost: {
-                  type: "number",
-                  description: "Opcional. El costo simulado."
-                },
-                targetUnits: {
-                  type: "integer",
-                  description: "Opcional. Las unidades estimadas de venta."
-                }
+            type: SchemaType.OBJECT,
+            properties: {
+              sku: {
+                type: SchemaType.STRING,
+                description: "El SKU del producto."
               },
-              required: ["sku"]
-            }
+              price: {
+                type: SchemaType.NUMBER,
+                description: "Opcional. El precio simulado."
+              },
+              cost: {
+                type: SchemaType.NUMBER,
+                description: "Opcional. El costo simulado."
+              },
+              targetUnits: {
+                type: SchemaType.INTEGER,
+                description: "Opcional. Las unidades estimadas de venta."
+              }
+            },
+            required: ["sku"]
           }
-        },
-        required: ["scenario_name", "items"]
-      }
+        }
+      },
+      required: ["scenario_name", "items"]
     }
   }
 ];
@@ -405,8 +384,8 @@ export async function POST(request: Request) {
     const userMessage = messages[messages.length - 1]?.content || "";
     const localActions: ActionPayload[] = [];
 
-    // 1. Si OpenAI está configurado, usarlo con Tool Calling
-    if (openai) {
+    // 1. Si Gemini está configurado, usarlo con Tool Calling
+    if (genAI) {
       try {
         const systemPrompt = `
 Eres ARASY, un copiloto de inteligencia artificial experto en Ecommerce Intelligence y optimización de rentabilidad (Retail/SaaS).
@@ -424,95 +403,88 @@ Instrucciones para tus respuestas:
 6. Si te piden expresamente reponer, comprar, liquidar o rebajar un SKU específico, ejecuta la acción comercial con "execute_commercial_decision" o "save_mix_simulation_scenario" de manera inmediata.
 `;
 
-        const apiMessages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
-          { role: "system", content: systemPrompt },
-          ...messages.map((m: ChatMessage) => ({
-            role: m.role === "user" ? ("user" as const) : ("assistant" as const),
-            content: m.content,
-          })),
-        ];
+        const model = genAI.getGenerativeModel({
+          model: "gemini-1.5-flash",
+          systemInstruction: systemPrompt,
+          tools: [{ functionDeclarations: functionDeclarations as any }],
+        });
+
+        // Convertir historial a formato Gemini ({ role: "user"|"model", parts: [{ text: string }] })
+        const history: any[] = [];
+        const messagesToConvert = messages.slice(0, -1);
+        for (const m of messagesToConvert) {
+          if (m.role === "system") continue;
+          history.push({
+            role: m.role === "user" ? "user" : "model",
+            parts: [{ text: m.content }],
+          });
+        }
+
+        const chat = model.startChat({ history });
+        let result = await chat.sendMessage(userMessage);
 
         let loopLimit = 5;
-        let responseMessage: OpenAI.Chat.Completions.ChatCompletionMessage | null = null;
 
         while (loopLimit > 0) {
-          const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
-            messages: apiMessages,
-            tools: tools,
-            tool_choice: "auto",
-            temperature: 0.3,
-          });
-
-          responseMessage = response.choices[0]?.message;
-          if (!responseMessage) {
-            throw new Error("No se recibió mensaje del modelo.");
-          }
-
-          // Guardar el mensaje del asistente en el historial para la siguiente iteración
-          apiMessages.push(responseMessage);
-
-          // Si el modelo no solicita llamadas a herramientas, terminamos
-          if (!responseMessage.tool_calls || responseMessage.tool_calls.length === 0) {
+          const calls = (result as any).response?.functionCalls ? (result as any).response.functionCalls() : undefined;
+          if (!calls || calls.length === 0) {
             break;
           }
+          const functionResponses: any[] = [];
 
-          // Ejecutar las llamadas a herramientas
-          for (const toolCall of responseMessage.tool_calls) {
-            if (toolCall.type !== "function") continue;
-            const { name, arguments: argsString } = toolCall.function;
-            let result: unknown;
+          for (const call of calls) {
+            const { name, args } = call;
+            let callResult: any;
 
             try {
-              const args = argsString ? JSON.parse(argsString) : {};
-              
               if (name === "get_products_list") {
-                result = await getProductsList(args);
+                callResult = await getProductsList(args as any);
               } else if (name === "get_product_detail") {
-                result = await getProductDetail(args.sku);
+                callResult = await getProductDetail((args as any).sku);
               } else if (name === "get_goals") {
-                result = await getGoals();
+                callResult = await getGoals();
               } else if (name === "get_alerts") {
-                result = await getAlerts();
+                callResult = await getAlerts();
               } else if (name === "get_inventory_summary") {
-                result = await getInventorySummary();
+                callResult = await getInventorySummary();
               } else if (name === "execute_commercial_decision") {
-                const res = await executeCommercialDecision(args.sku, args.decision, args.quantity, args.discount);
-                result = res;
+                const res = await executeCommercialDecision((args as any).sku, (args as any).decision, (args as any).quantity, (args as any).discount);
+                callResult = res;
                 if (res.success && res.action) {
                   localActions.push(res.action);
                 }
               } else if (name === "save_mix_simulation_scenario") {
-                const res = await saveMixSimulationScenario(args.scenario_name, args.items);
-                result = res;
+                const res = await saveMixSimulationScenario((args as any).scenario_name, (args as any).items);
+                callResult = res;
                 if (res.success && res.action) {
                   localActions.push(res.action);
                 }
               } else {
-                result = { error: `Herramienta desconocida: ${name}` };
+                callResult = { error: `Herramienta desconocida: ${name}` };
               }
             } catch (err) {
-              result = { 
+              callResult = { 
                 error: `Error ejecutando herramienta: ${err instanceof Error ? err.message : "Desconocido"}` 
               };
             }
 
-            // Añadir el resultado de la herramienta al historial
-            apiMessages.push({
-              role: "tool",
-              tool_call_id: toolCall.id,
-              content: JSON.stringify(result),
+            functionResponses.push({
+              functionResponse: {
+                name,
+                response: callResult,
+              }
             });
           }
 
+          result = await chat.sendMessage(functionResponses);
           loopLimit--;
         }
 
-        const reply = responseMessage?.content || "No pude generar una respuesta.";
+        const reply = result.response.text() || "No pude generar una respuesta.";
         return NextResponse.json({ role: "assistant", content: reply, actions: localActions });
       } catch (err) {
         const errMsg = err instanceof Error ? err.message : "Error desconocido";
-        console.warn("Fallo al llamar a OpenAI con Tool Calling, usando heuristic fallback:", errMsg);
+        console.warn("Fallo al llamar a Gemini con Tool Calling, usando heuristic fallback:", errMsg);
       }
     }
 
