@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  role      String   @default("USER")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id             String   @id @default(uuid())
+  sku            String   @unique
+  name           String
+  brand          String
+  category       String
+  subCategory    String
+  cost           Float
+  price          Float
+  stock          Int
+  agingInDays    Int      @default(0)
+  coverageInDays Float    @default(0)
+  classification String   @default("ACOMPAÑANTE") // ANCLA, ACOMPAÑANTE, LASTRE
+  decision       String   @default("MANTENER")    // EMPUJAR, MANTENER, LIQUIDAR, EXCLUIR
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  sales          Sale[]
+  alerts         Alert[]
+}
+
+model Sale {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  date      DateTime
+  quantity  Int
+  revenue   Float
+  channel   String   // RETAIL, SHOPIFY, MERCADO_LIBRE
+  createdAt DateTime @default(now())
+}
+
+model Goal {
+  id            String   @id @default(uuid())
+  month         Int      // 1 to 12
+  year          Int
+  category      String   // E.g. "Electronics", "Fashion" o "Global"
+  targetRevenue Float
+  targetMargin  Float    // E.g. 0.35 (35%)
+  createdAt     DateTime @default(now())
+}
+
+model Forecast {
+  id                String   @id @default(uuid())
+  month             Int
+  year              Int
+  category          String
+  forecastedRevenue Float
+  forecastedMargin  Float
+  createdAt         DateTime @default(now())
+}
+
+model Alert {
+  id        String   @id @default(uuid())
+  type      String   // SOBRESTOCK, QUIEBRE, STOCK_MUERTO
+  message   String
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  date      DateTime @default(now())
+  resolved  Boolean  @default(false)
+}
+
+model Mix {
+  id             String   @id @default(uuid())
+  name           String
+  date           DateTime @default(now())
+  weightedMargin Float
+  targetMargin   Float
+  totalRevenue   Float
+  totalCost      Float
+  itemsJson      String   // JSON serializado con los overrides de cada SKU
+  createdAt      DateTime @default(now())
+}

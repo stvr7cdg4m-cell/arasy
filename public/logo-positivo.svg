@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 453.75 116.25">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;display=swap');
+      .cls-1 {
+        fill: #2262dd;
+      }
+      .cls-2 {
+        fill: #2361dd;
+        font-size: 10.83px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+      }
+      .cls-3 {
+        font-size: 34.17px;
+        fill: #0d1b2a;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.34em;
+      }
+    </style>
+  </defs>
+  <text class="cls-3" transform="translate(184.57 69.99)">ARASY</text>
+  <text class="cls-2" transform="translate(184.4 84.5)">CLARIDAD PARA DECIDIR</text>
+  <path class="cls-1" d="M65.75,83.5s26.14-8.67,41.06-8.24c9.95-16.77,15.77-25.86,15.77-25.86l15.2,25.29s33.39,3.55,40.92,8.81c-19.04-3.55-43.9-4.69-43.9-4.69l-11.94-21.03-12.08,21.03s-28.27,1.42-45.04,4.69Z"/>
+  <path class="cls-1" d="M84.79,71.02s3.55-35.95,38.79-36.37c35.24-.43,37.94,36.37,37.94,36.37,0,0-5.12-32.4-38.36-32.25s-38.36,32.25-38.36,32.25Z"/>
+</svg>
