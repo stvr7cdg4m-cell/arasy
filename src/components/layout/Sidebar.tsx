@@ -26,8 +26,13 @@ export default function Sidebar() {
   const searchParams = useSearchParams();
   const month = searchParams.get("month");
   const [userName, setUserName] = useState("Federico RM");
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    const handleToggle = () => setIsOpen(prev => !prev);
+    const handleClose = () => setIsOpen(false);
+    window.addEventListener("arasy_toggle_sidebar", handleToggle);
+    window.addEventListener("arasy_close_sidebar", handleClose);
     /* eslint-disable react-hooks/set-state-in-effect */
     setUserName(localStorage.getItem("arasy_user_name") || "Federico RM");
     
@@ -36,11 +41,26 @@ export default function Sidebar() {
     };
     /* eslint-enable react-hooks/set-state-in-effect */
     window.addEventListener("arasy_config_changed", handleConfigChange);
-    return () => window.removeEventListener("arasy_config_changed", handleConfigChange);
+    return () => {
+      window.removeEventListener("arasy_config_changed", handleConfigChange);
+      window.removeEventListener("arasy_toggle_sidebar", handleToggle);
+      window.removeEventListener("arasy_close_sidebar", handleClose);
+    };
   }, []);
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-sidebar-width bg-midnight flex flex-col py-margin-desktop z-50 border-r border-white/10">
+    <>
+      {/* Backdrop for mobile */}
+      {isOpen && (
+        <div 
+          onClick={() => setIsOpen(false)}
+          className="fixed inset-0 bg-midnight/60 backdrop-blur-sm z-40 lg:hidden animate-in fade-in duration-200"
+        />
+      )}
+
+      <aside className={`fixed left-0 top-0 h-screen w-sidebar-width bg-midnight flex flex-col py-margin-desktop z-50 border-r border-white/10 transition-transform duration-300 ${
+        isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+      }`}>
       {/* Brand Header */}
       <div className="px-6 mb-10">
         <div className="flex items-center gap-2">
@@ -64,6 +84,7 @@ export default function Sidebar() {
             <Link
               key={item.href}
               href={hrefWithMonth}
+              onClick={() => setIsOpen(false)}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 active:scale-95 ${
                 isActive
                   ? "bg-primary-blue text-white shadow-lg shadow-primary-blue/20 font-medium"
@@ -96,5 +117,6 @@ export default function Sidebar() {
         </div>
       </div>
     </aside>
+  </>
   );
 }

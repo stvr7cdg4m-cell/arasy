@@ -47,7 +47,7 @@ export default function RootLayout({
         </Suspense>
 
         {/* Work Area Shell */}
-        <div className="flex-1 pl-sidebar-width h-screen max-h-screen flex flex-col overflow-hidden relative">
+        <div className="flex-1 lg:pl-sidebar-width h-screen max-h-screen flex flex-col overflow-hidden relative">
           <Suspense fallback={<header className="sticky top-0 right-0 w-full h-16 bg-[#EAF2FF]/80 border-b border-slate-muted/20" />}>
             <Header />
           </Suspense>

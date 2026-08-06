@@ -136,6 +136,16 @@ export default function Header() {
       <header className="sticky top-0 right-0 w-full h-16 bg-[#EAF2FF]/80 backdrop-blur-md flex justify-between items-center px-gutter z-40 border-b border-slate-muted/20">
         {/* Search Bar / Context */}
         <div className="flex items-center gap-4 flex-1">
+          {/* Hamburger menu button for mobile layout */}
+          <button 
+            type="button"
+            onClick={() => window.dispatchEvent(new Event("arasy_toggle_sidebar"))}
+            className="lg:hidden text-slate-muted hover:text-primary-blue transition-all cursor-pointer p-1 rounded-lg hover:bg-white/50 shrink-0 flex items-center justify-center"
+            title="Abrir menú"
+          >
+            <span className="material-symbols-outlined text-[24px]">menu</span>
+          </button>
+
           <div className="relative w-full max-w-xs group">
             <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-muted/80 text-[18px]">
               search
