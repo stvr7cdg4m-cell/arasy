@@ -26,11 +26,14 @@ export async function POST(request: NextRequest) {
       channel,
       goal,
       message,
+      resendConfigured: !!resendApiKey,
       createdAt: new Date().toISOString(),
     });
 
-    if (resend) {
-      await resend.emails.send({
+    if (!resend) {
+      console.warn("⚠️ RESEND_API_KEY no está configurada en las variables de entorno.");
+    } else {
+      const response = await resend.emails.send({
         from: "ARASY Consulting <onboarding@resend.dev>",
         to: [DESTINATION_EMAIL],
         subject: `🎯 Nueva Consulta E-Commerce de ${name} (${company || "Empresa"})`,
@@ -41,7 +44,7 @@ export async function POST(request: NextRequest) {
             
             <table style="width: 100%; text-align: left; border-collapse: collapse; font-size: 14px; margin-top: 16px;">
               <tr><th style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Nombre:</th><td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: bold;">${name}</td></tr>
-              <tr><th style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Email:</th><td style="padding: 8px; border-bottom: 1px solid #f1f5f9;"><a href="mailto:${email}">${email}</a></td></tr>
+              <tr><th style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Email del Cliente:</th><td style="padding: 8px; border-bottom: 1px solid #f1f5f9;"><a href="mailto:${email}">${email}</a></td></tr>
               <tr><th style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Empresa / Marca:</th><td style="padding: 8px; border-bottom: 1px solid #f1f5f9;">${company || "No especificado"}</td></tr>
               <tr><th style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Sitio Web / Shop:</th><td style="padding: 8px; border-bottom: 1px solid #f1f5f9;">${website || "No especificado"}</td></tr>
               <tr><th style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Teléfono / WhatsApp:</th><td style="padding: 8px; border-bottom: 1px solid #f1f5f9;">${phone || "No especificado"}</td></tr>
@@ -66,6 +69,12 @@ export async function POST(request: NextRequest) {
           </div>
         `,
       });
+
+      if (response.error) {
+        console.error("❌ Resend API Error:", response.error);
+      } else {
+        console.log("✅ Email enviado con éxito vía Resend ID:", response.data?.id);
+      }
     }
 
     return NextResponse.json({
