@@ -1,0 +1,451 @@
+{
+  "communities": {
+    "0": [
+      "prisma_seed",
+      "prisma_seed_main",
+      "src_app_api_alerts_route",
+      "src_app_api_alerts_route_get",
+      "src_app_api_mixes_route",
+      "src_app_api_mixes_route_get",
+      "src_app_api_mixes_route_post",
+      "src_app_api_planning_execute_route",
+      "src_app_api_planning_execute_route_post",
+      "src_app_api_planning_save_route",
+      "src_app_api_planning_save_route_post",
+      "src_app_api_stock_analysis_route",
+      "src_app_api_stock_analysis_route_get",
+      "src_app_decision_center_page",
+      "src_app_decision_center_page_decisioncenterpage",
+      "src_app_mix_optimizer_page",
+      "src_app_mix_optimizer_page_mixoptimizerpage",
+      "src_app_mix_optimizer_page_pageprops",
+      "src_app_stock_analysis_page",
+      "src_app_stock_analysis_page_pageprops",
+      "src_app_stock_analysis_page_stockanalysispage",
+      "src_lib_business_logic_sales_analytics",
+      "src_lib_business_logic_sales_analytics_salesanalytics",
+      "src_lib_business_logic_sales_analytics_salesanalytics_calculateweightedvelocity",
+      "src_lib_business_logic_sales_analytics_salesanalytics_diagnosestockvendibility",
+      "src_lib_business_logic_sales_analytics_saleshistoryitem",
+      "src_lib_db",
+      "src_lib_db_createprismaclient",
+      "src_lib_db_globalforprisma",
+      "src_lib_db_prisma"
+    ],
+    "1": [
+      "src_app_decision_center_clientdecisioncenter",
+      "src_app_decision_center_clientdecisioncenter_clientdecisioncenter",
+      "src_app_decision_center_clientdecisioncenter_clientdecisioncenterprops",
+      "src_app_decision_center_clientdecisioncenter_message",
+      "src_app_mix_optimizer_clientmixoptimizer_clientmixoptimizer",
+      "src_app_planning_clientplanningview",
+      "src_app_planning_clientplanningview_clientplanningview",
+      "src_app_planning_clientplanningview_clientplanningviewprops",
+      "src_app_planning_clientplanningview_planningitem",
+      "src_app_planning_page",
+      "src_app_planning_page_pageprops",
+      "src_app_planning_page_planningpage",
+      "src_app_stock_analysis_clientstockanalysis",
+      "src_app_stock_analysis_clientstockanalysis_clientstockanalysis",
+      "src_app_stock_analysis_clientstockanalysis_clientstockanalysisprops",
+      "src_app_stock_analysis_clientstockanalysis_stockanalyzeditem",
+      "src_lib_business_logic_financials",
+      "src_lib_business_logic_financials_financials",
+      "src_lib_business_logic_financials_financials_calculategrossmargin",
+      "src_lib_business_logic_financials_financials_calculatenetmargin",
+      "src_lib_business_logic_financials_financials_getchannelcommission",
+      "src_lib_utils",
+      "src_lib_utils_cn",
+      "src_lib_utils_formatcurrency",
+      "src_lib_utils_formatpercent",
+      "src_lib_utils_formatpercentage"
+    ],
+    "2": [
+      "eslint",
+      "eslint_config_next",
+      "package_devdependencies",
+      "package_devdependencies_eslint",
+      "package_devdependencies_eslint_config_next",
+      "package_devdependencies_prisma",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_tailwindcss_postcss",
+      "package_devdependencies_tsx",
+      "package_devdependencies_types_node",
+      "package_devdependencies_types_react",
+      "package_devdependencies_types_react_dom",
+      "package_devdependencies_typescript",
+      "prisma",
+      "tailwindcss",
+      "tailwindcss_postcss",
+      "tsx",
+      "types_node",
+      "types_react",
+      "types_react_dom",
+      "typescript"
+    ],
+    "3": [
+      "lucide_react",
+      "neondatabase_serverless",
+      "next",
+      "openai",
+      "package_dependencies",
+      "package_dependencies_lucide_react",
+      "package_dependencies_neondatabase_serverless",
+      "package_dependencies_next",
+      "package_dependencies_openai",
+      "package_dependencies_prisma_adapter_neon",
+      "package_dependencies_prisma_client",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "package_dependencies_recharts",
+      "package_dependencies_ws",
+      "prisma_adapter_neon",
+      "prisma_client",
+      "react",
+      "react_dom",
+      "recharts",
+      "ws"
+    ],
+    "4": [
+      "ref_dom",
+      "ref_dom_iterable",
+      "ref_esnext",
+      "tsconfig_compileroptions",
+      "tsconfig_compileroptions_allowjs",
+      "tsconfig_compileroptions_esmoduleinterop",
+      "tsconfig_compileroptions_incremental",
+      "tsconfig_compileroptions_isolatedmodules",
+      "tsconfig_compileroptions_jsx",
+      "tsconfig_compileroptions_lib",
+      "tsconfig_compileroptions_module",
+      "tsconfig_compileroptions_moduleresolution",
+      "tsconfig_compileroptions_noemit",
+      "tsconfig_compileroptions_paths",
+      "tsconfig_compileroptions_plugins",
+      "tsconfig_compileroptions_resolvejsonmodule",
+      "tsconfig_compileroptions_skiplibcheck",
+      "tsconfig_compileroptions_strict",
+      "tsconfig_compileroptions_target"
+    ],
+    "5": [
+      "src_app_dashboard_channeldistributionchartwrapper",
+      "src_app_dashboard_channeldistributionchartwrapper_channeldistributionchart",
+      "src_app_dashboard_channeldistributionchartwrapper_channeldistributionchartwrapper",
+      "src_app_dashboard_channeldistributionchartwrapper_channeldistributionchartwrapperprops",
+      "src_app_dashboard_channeldistributionchartwrapper_channelitem",
+      "src_app_dashboard_channelsyncstatuswrapper",
+      "src_app_dashboard_channelsyncstatuswrapper_channelsyncstatus",
+      "src_app_dashboard_channelsyncstatuswrapper_channelsyncstatuswrapper",
+      "src_app_dashboard_page",
+      "src_app_dashboard_page_dashboardpage",
+      "src_app_dashboard_page_formatnumber",
+      "src_app_dashboard_page_pageprops",
+      "src_app_dashboard_performancechartwrapper",
+      "src_app_dashboard_performancechartwrapper_monthlydataitem",
+      "src_app_dashboard_performancechartwrapper_performancechart",
+      "src_app_dashboard_performancechartwrapper_performancechartwrapper",
+      "src_app_dashboard_performancechartwrapper_performancechartwrapperprops"
+    ],
+    "6": [
+      "src_app_api_chat_route",
+      "src_app_api_chat_route_actionpayload",
+      "src_app_api_chat_route_chatmessage",
+      "src_app_api_chat_route_executecommercialdecision",
+      "src_app_api_chat_route_generateheuristicresponse",
+      "src_app_api_chat_route_getalerts",
+      "src_app_api_chat_route_getgoals",
+      "src_app_api_chat_route_getinventorysummary",
+      "src_app_api_chat_route_getproductdetail",
+      "src_app_api_chat_route_getproductslist",
+      "src_app_api_chat_route_post",
+      "src_app_api_chat_route_savemixsimulationscenario",
+      "src_app_api_chat_route_scenarioitemoverride",
+      "src_app_api_chat_route_tools"
+    ],
+    "7": [
+      "package",
+      "package_name",
+      "package_prisma",
+      "package_prisma_seed",
+      "package_private",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_scripts_lint",
+      "package_scripts_postinstall",
+      "package_scripts_start",
+      "package_version"
+    ],
+    "8": [
+      "src_app_layout",
+      "src_app_layout_manrope",
+      "src_app_layout_metadata",
+      "src_app_layout_montserrat",
+      "src_app_layout_rootlayout",
+      "src_components_layout_header",
+      "src_components_layout_header_header",
+      "src_components_layout_sidebar",
+      "src_components_layout_sidebar_navitem",
+      "src_components_layout_sidebar_navitems",
+      "src_components_layout_sidebar_sidebar"
+    ],
+    "9": [
+      "ref_mts",
+      "ref_next_dev_types_ts",
+      "ref_next_env_d_ts",
+      "ref_next_types_ts",
+      "ref_node_modules",
+      "ref_ts",
+      "ref_tsx",
+      "tsconfig",
+      "tsconfig_exclude",
+      "tsconfig_include"
+    ],
+    "10": [
+      "src_app_mix_optimizer_clientmixoptimizer",
+      "src_app_mix_optimizer_clientmixoptimizer_clientmixoptimizerprops",
+      "src_app_mix_optimizer_clientmixoptimizer_extendedskumixitem",
+      "src_lib_business_logic_mixengine",
+      "src_lib_business_logic_mixengine_calculatemixmetrics",
+      "src_lib_business_logic_mixengine_evaluateskuclassification",
+      "src_lib_business_logic_mixengine_mixcalculationresult",
+      "src_lib_business_logic_mixengine_skumixitem",
+      "src_lib_business_logic_mixengine_suggestoperationaldecision"
+    ],
+    "11": [
+      "changelog_changelog",
+      "changelog_v0_1_0",
+      "changelog_v0_2_0",
+      "changelog_v0_3_0",
+      "claude_arasy_guia",
+      "claude_fase1",
+      "claude_fase2",
+      "claude_fase3"
+    ],
+    "12": [
+      "src_app_dashboard_channeldistributionchart",
+      "src_app_dashboard_channeldistributionchart_channeldistributionchart",
+      "src_app_dashboard_channeldistributionchart_channeldistributionchartprops",
+      "src_app_dashboard_channeldistributionchart_channelitem",
+      "src_app_dashboard_channeldistributionchart_customtooltip",
+      "src_app_dashboard_channeldistributionchart_customtooltipprops"
+    ],
+    "13": [
+      "src_app_dashboard_performancechart",
+      "src_app_dashboard_performancechart_customtooltip",
+      "src_app_dashboard_performancechart_customtooltipprops",
+      "src_app_dashboard_performancechart_monthlydataitem",
+      "src_app_dashboard_performancechart_performancechart",
+      "src_app_dashboard_performancechart_performancechartprops"
+    ],
+    "14": [
+      "src_app_integrations_clientintegrations",
+      "src_app_integrations_clientintegrations_clientintegrations",
+      "src_app_integrations_clientintegrations_integrationstate",
+      "src_app_integrations_clientintegrations_logentry",
+      "src_app_integrations_page",
+      "src_app_integrations_page_integrationspage"
+    ],
+    "15": [
+      "src_app_dashboard_channelsyncstatus",
+      "src_app_dashboard_channelsyncstatus_channelsyncstatus",
+      "src_app_dashboard_channelsyncstatus_integrationstate"
+    ],
+    "16": [
+      "_agents_rules_graphify_rules",
+      "_agents_workflows_graphify_workflow"
+    ],
+    "17": [
+      "eslint_config",
+      "eslint_config_eslintconfig"
+    ],
+    "18": [
+      "next_config",
+      "next_config_nextconfig"
+    ],
+    "19": [
+      "postcss_config",
+      "postcss_config_config"
+    ],
+    "20": [
+      "src_app_page",
+      "src_app_page_home"
+    ],
+    "21": [
+      "agents_nextjs_rules"
+    ],
+    "22": [
+      "prisma_config"
+    ],
+    "23": [
+      "public_file_svg"
+    ],
+    "24": [
+      "public_globe_svg"
+    ],
+    "25": [
+      "public_logo_negativo_svg"
+    ],
+    "26": [
+      "public_logo_positivo_svg"
+    ],
+    "27": [
+      "public_next_svg"
+    ],
+    "28": [
+      "public_vercel_svg"
+    ],
+    "29": [
+      "public_window_svg"
+    ],
+    "30": [
+      "readme_readme"
+    ]
+  },
+  "cohesion": {
+    "0": 0.10344827586206896,
+    "1": 0.14153846153846153,
+    "2": 0.09523809523809523,
+    "3": 0.09523809523809523,
+    "4": 0.10526315789473684,
+    "5": 0.14705882352941177,
+    "6": 0.23076923076923078,
+    "7": 0.16666666666666666,
+    "8": 0.21818181818181817,
+    "9": 0.2,
+    "10": 0.3055555555555556,
+    "11": 0.2857142857142857,
+    "12": 0.3333333333333333,
+    "13": 0.3333333333333333,
+    "14": 0.4,
+    "15": 0.6666666666666666,
+    "16": 1.0,
+    "17": 1.0,
+    "18": 1.0,
+    "19": 1.0,
+    "20": 1.0,
+    "21": 1.0,
+    "22": 1.0,
+    "23": 1.0,
+    "24": 1.0,
+    "25": 1.0,
+    "26": 1.0,
+    "27": 1.0,
+    "28": 1.0,
+    "29": 1.0,
+    "30": 1.0
+  },
+  "gods": [
+    {
+      "id": "tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 16
+    },
+    {
+      "id": "src_lib_db_prisma",
+      "label": "prisma",
+      "degree": 13
+    },
+    {
+      "id": "src_lib_utils_formatcurrency",
+      "label": "formatCurrency()",
+      "degree": 11
+    },
+    {
+      "id": "src_app_api_chat_route_post",
+      "label": "POST()",
+      "degree": 9
+    },
+    {
+      "id": "src_lib_business_logic_financials_financials",
+      "label": "Financials",
+      "degree": 8
+    },
+    {
+      "id": "src_lib_utils_formatpercent",
+      "label": "formatPercent",
+      "degree": 7
+    },
+    {
+      "id": "tsconfig_include",
+      "label": "include",
+      "degree": 7
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "degree": 6
+    },
+    {
+      "id": "src_app_mix_optimizer_clientmixoptimizer_clientmixoptimizer",
+      "label": "ClientMixOptimizer()",
+      "degree": 5
+    },
+    {
+      "id": "src_app_stock_analysis_clientstockanalysis_clientstockanalysis",
+      "label": "ClientStockAnalysis()",
+      "degree": 5
+    }
+  ],
+  "surprises": [
+    {
+      "source": "Fase 1: Estabilizaci\u00f3n T\u00e9cnica",
+      "target": "Versi\u00f3n 0.3.0",
+      "source_files": [
+        "CLAUDE.md",
+        "CHANGELOG.md"
+      ],
+      "confidence": "INFERRED",
+      "relation": "conceptually_related_to",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
+    },
+    {
+      "source": "Fase 2: Conexi\u00f3n de Datos Activa",
+      "target": "Versi\u00f3n 0.3.0",
+      "source_files": [
+        "CLAUDE.md",
+        "CHANGELOG.md"
+      ],
+      "confidence": "INFERRED",
+      "relation": "conceptually_related_to",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
+    },
+    {
+      "source": "ClientMixOptimizer()",
+      "target": "calculateMixMetrics()",
+      "source_files": [
+        "src/app/mix-optimizer/ClientMixOptimizer.tsx",
+        "src/lib/business-logic/mixEngine.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "PlanningPage()",
+      "target": "formatCurrency()",
+      "source_files": [
+        "src/app/planning/page.tsx",
+        "src/lib/utils.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "peripheral node `PlanningPage()` unexpectedly reaches hub `formatCurrency()`"
+    },
+    {
+      "source": "Graphify Integration Rules",
+      "target": "Graphify Workflow",
+      "source_files": [
+        ".agents/rules/graphify.md",
+        ".agents/workflows/graphify.md"
+      ],
+      "confidence": "INFERRED",
+      "relation": "conceptually_related_to",
+      "why": "inferred connection - not explicitly stated in source"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}

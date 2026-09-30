@@ -1,8 +1,5 @@
-import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Montserrat, Manrope } from "next/font/google";
-import Sidebar from "@/components/layout/Sidebar";
-import Header from "@/components/layout/Header";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -18,8 +15,15 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "ARASY - Claridad para decidir",
-  description: "Plataforma de Ecommerce Intelligence para la toma de decisiones estratégicas.",
+  title: "Arasy | Consultoría en Optimización de Inventario & Ecommerce Intelligence",
+  description: "Consultoría estratégica para Retail y E-commerce. Maximiza tu margen bruto, elimina el sobrestock y evita quiebres de ventas con análisis avanzado de datos.",
+  keywords: ["Consultoría Ecommerce", "Retail Analytics", "Optimización de Inventario", "Margen Bruto", "Control de Stock", "Arasy"],
+  authors: [{ name: "Arasy Consulting" }],
+  openGraph: {
+    title: "Arasy | Consultoría en Optimización de Inventario & Ecommerce",
+    description: "Claridad para decidir. Transformamos tus datos de inventario y ventas en rentabilidad.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -30,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${montserrat.variable} ${manrope.variable} h-full antialiased`}
+      className={`${montserrat.variable} ${manrope.variable} h-full antialiased scroll-smooth`}
       suppressHydrationWarning
     >
       <head>
@@ -40,21 +44,8 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-full flex bg-ice text-midnight font-sans overflow-hidden" suppressHydrationWarning>
-        {/* Navigation Sidebar */}
-        <Suspense fallback={<aside className="fixed left-0 top-0 h-screen w-sidebar-width bg-midnight border-r border-white/10" />}>
-          <Sidebar />
-        </Suspense>
-
-        {/* Work Area Shell */}
-        <div className="flex-1 lg:pl-sidebar-width h-screen max-h-screen flex flex-col overflow-hidden relative">
-          <Suspense fallback={<header className="sticky top-0 right-0 w-full h-16 bg-[#EAF2FF]/80 border-b border-slate-muted/20" />}>
-            <Header />
-          </Suspense>
-          <main className="flex-1 overflow-y-auto custom-scrollbar control-tower-line">
-            {children}
-          </main>
-        </div>
+      <body className="min-h-full bg-midnight text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white" suppressHydrationWarning>
+        {children}
       </body>
     </html>
   );

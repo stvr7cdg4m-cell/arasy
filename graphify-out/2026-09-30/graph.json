@@ -2043,7 +2043,7 @@
       "label": "LandingPage()",
       "file_type": "code",
       "source_file": "src/app/page.tsx",
-      "source_location": "L6",
+      "source_location": "L5",
       "_callable": true,
       "_origin": "ast",
       "id": "src_app_page_landingpage",
@@ -2096,29 +2096,6 @@
       "community": 20,
       "community_name": "app/page.tsx",
       "norm_label": "contactform()"
-    },
-    {
-      "label": "Navbar.tsx",
-      "file_type": "code",
-      "source_file": "src/components/landing/Navbar.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "src_components_landing_navbar",
-      "community": 20,
-      "community_name": "app/page.tsx",
-      "norm_label": "navbar.tsx"
-    },
-    {
-      "label": "Navbar()",
-      "file_type": "code",
-      "source_file": "src/components/landing/Navbar.tsx",
-      "source_location": "L7",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "src_components_landing_navbar_navbar",
-      "community": 20,
-      "community_name": "app/page.tsx",
-      "norm_label": "navbar()"
     },
     {
       "label": "Header.tsx",
@@ -6037,7 +6014,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/page.tsx",
-      "source_location": "L6",
+      "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_app_page",
@@ -6049,7 +6026,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/app/page.tsx",
-      "source_location": "L4",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_app_page",
@@ -6061,35 +6038,11 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/app/page.tsx",
-      "source_location": "L4",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_app_page",
       "target": "src_components_landing_contactform_contactform",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_app_page",
-      "target": "src_components_landing_navbar",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_app_page",
-      "target": "src_components_landing_navbar_navbar",
       "confidence_score": 1.0
     },
     {
@@ -6112,17 +6065,6 @@
       "_origin": "ast",
       "source": "src_components_landing_contactform",
       "target": "src_components_landing_contactform_contactform",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/landing/Navbar.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_components_landing_navbar",
-      "target": "src_components_landing_navbar_navbar",
       "confidence_score": 1.0
     },
     {
