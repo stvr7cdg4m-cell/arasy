@@ -1,11 +1,11 @@
 # Graph Report - Arasy  (2026-09-30)
 
 ## Corpus Check
-- 55 files · ~34,942 words
+- 56 files · ~35,200 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 267 nodes · 320 edges · 36 communities (19 shown, 17 thin omitted)
+- 269 nodes · 323 edges · 36 communities (19 shown, 17 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 

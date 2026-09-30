@@ -1,16 +1,16 @@
 # Graph Report - Arasy  (2026-09-30)
 
 ## Corpus Check
-- 56 files · ~35,200 words
+- 56 files · ~35,174 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 269 nodes · 323 edges · 36 communities (19 shown, 17 thin omitted)
+- 271 nodes · 325 edges · 35 communities (19 shown, 16 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `cc696f69`
+- Built from commit: `0ee41f62`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,12 +19,11 @@
 - formatCurrency
 - devDependencies
 - dependencies
-- Base de Datos y Rutas de API
+- compilerOptions
 - dashboard/page.tsx
 - chat/route.ts
 - Copiloto AI (Chat y Herramientas)
 - (demo)/layout.tsx
-- Layout y Navegación Principal
 - ClientMixOptimizer.tsx
 - Documentación y Changelog
 - auth.ts
@@ -76,23 +75,27 @@
 ## Import Cycles
 - None detected.
 
-## Communities (36 total, 17 thin omitted)
+## Communities (35 total, 16 thin omitted)
+
+### Community 0 - "db.ts"
+Cohesion: 0.11
+Nodes (7): GET(), PageProps, StockAnalysisPage(), SalesAnalytics, SalesHistoryItem, globalForPrisma, prisma
 
 ### Community 1 - "formatCurrency"
-Cohesion: 0.11
-Nodes (19): GET(), ClientDecisionCenter(), ClientDecisionCenterProps, Message, ClientPlanningView(), ClientPlanningViewProps, PlanningItem, PageProps (+11 more)
+Cohesion: 0.14
+Nodes (14): ClientDecisionCenter(), ClientDecisionCenterProps, Message, ClientPlanningView(), ClientPlanningViewProps, PlanningItem, PageProps, PlanningPage() (+6 more)
 
 ### Community 2 - "devDependencies"
 Cohesion: 0.09
 Nodes (23): eslint, eslint-config-next, devDependencies, eslint, eslint-config-next, prisma, tailwindcss, @tailwindcss/postcss (+15 more)
 
 ### Community 3 - "dependencies"
-Cohesion: 0.09
-Nodes (23): @google/generative-ai, lucide-react, @neondatabase/serverless, next, openai, dependencies, @google/generative-ai, lucide-react (+15 more)
+Cohesion: 0.08
+Nodes (25): @google/generative-ai, lucide-react, @neondatabase/serverless, next, openai, dependencies, @google/generative-ai, lucide-react (+17 more)
 
-### Community 4 - "Base de Datos y Rutas de API"
-Cohesion: 0.11
-Nodes (19): dom, dom.iterable, esnext, compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules (+11 more)
+### Community 4 - "compilerOptions"
+Cohesion: 0.07
+Nodes (28): dom, dom.iterable, esnext, **/*.mts, .next/dev/types/**/*.ts, next-env.d.ts, .next/types/**/*.ts, node_modules (+20 more)
 
 ### Community 5 - "dashboard/page.tsx"
 Cohesion: 0.15
@@ -109,10 +112,6 @@ Nodes (11): name, prisma, seed, private, scripts, build, dev, lint (+3 more)
 ### Community 8 - "(demo)/layout.tsx"
 Cohesion: 0.27
 Nodes (5): LiveDemoBanner(), Header(), NavItem, navItems, Sidebar()
-
-### Community 9 - "Layout y Navegación Principal"
-Cohesion: 0.20
-Nodes (9): **/*.mts, .next/dev/types/**/*.ts, next-env.d.ts, .next/types/**/*.ts, node_modules, **/*.ts, **/*.tsx, exclude (+1 more)
 
 ### Community 10 - "ClientMixOptimizer.tsx"
 Cohesion: 0.22
@@ -143,24 +142,24 @@ Cohesion: 0.40
 Nodes (3): manrope, metadata, montserrat
 
 ## Knowledge Gaps
-- **112 isolated node(s):** `eslintConfig`, `nextConfig`, `name`, `version`, `private` (+107 more)
+- **113 isolated node(s):** `eslintConfig`, `nextConfig`, `name`, `version`, `private` (+108 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **17 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `prisma` connect `db.ts` to `formatCurrency`, `ClientMixOptimizer.tsx`, `dashboard/page.tsx`, `chat/route.ts`?**
-  _High betweenness centrality (0.044) - this node is a cross-community bridge._
+  _High betweenness centrality (0.043) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `dependencies` to `Copiloto AI (Chat y Herramientas)`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
+  _High betweenness centrality (0.030) - this node is a cross-community bridge._
 - **Why does `devDependencies` connect `devDependencies` to `Copiloto AI (Chat y Herramientas)`?**
   _High betweenness centrality (0.028) - this node is a cross-community bridge._
 - **What connects `eslintConfig`, `nextConfig`, `name` to the rest of the system?**
-  _112 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _113 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `db.ts` be split into smaller, more focused modules?**
+  _Cohesion score 0.11375661375661375 - nodes in this community are weakly interconnected._
 - **Should `formatCurrency` be split into smaller, more focused modules?**
-  _Cohesion score 0.10510510510510511 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.13538461538461538 - nodes in this community are weakly interconnected._
 - **Should `devDependencies` be split into smaller, more focused modules?**
-  _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._
-- **Should `dependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._
