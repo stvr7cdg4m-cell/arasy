@@ -389,10 +389,32 @@
       "norm_label": "recharts"
     },
     {
-      "label": "ws",
+      "label": "resend",
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L23",
+      "_origin": "ast",
+      "id": "package_dependencies_resend",
+      "community": 3,
+      "community_name": "dependencies",
+      "norm_label": "resend"
+    },
+    {
+      "label": "resend",
+      "file_type": "concept",
+      "source_file": "package.json",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "resend",
+      "community": 3,
+      "community_name": "dependencies",
+      "norm_label": "resend"
+    },
+    {
+      "label": "ws",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "package_dependencies_ws",
       "community": 3,
@@ -403,7 +425,7 @@
       "label": "ws",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L23",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "ws",
       "community": 3,
@@ -414,7 +436,7 @@
       "label": "devDependencies",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "package_devdependencies",
       "community": 2,
@@ -425,7 +447,7 @@
       "label": "@tailwindcss/postcss",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "package_devdependencies_tailwindcss_postcss",
       "community": 2,
@@ -436,7 +458,7 @@
       "label": "@tailwindcss/postcss",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "tailwindcss_postcss",
       "community": 2,
@@ -447,7 +469,7 @@
       "label": "@types/node",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "package_devdependencies_types_node",
       "community": 2,
@@ -458,7 +480,7 @@
       "label": "@types/node",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "types_node",
       "community": 2,
@@ -469,7 +491,7 @@
       "label": "@types/react",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L28",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "package_devdependencies_types_react",
       "community": 2,
@@ -480,7 +502,7 @@
       "label": "@types/react",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L28",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "types_react",
       "community": 2,
@@ -491,7 +513,7 @@
       "label": "@types/react-dom",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L29",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "package_devdependencies_types_react_dom",
       "community": 2,
@@ -502,7 +524,7 @@
       "label": "@types/react-dom",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L29",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "types_react_dom",
       "community": 2,
@@ -513,7 +535,7 @@
       "label": "@types/ws",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L30",
+      "source_location": "L31",
       "_origin": "ast",
       "id": "package_devdependencies_types_ws",
       "community": 2,
@@ -524,7 +546,7 @@
       "label": "@types/ws",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L30",
+      "source_location": "L31",
       "_origin": "ast",
       "id": "types_ws",
       "community": 2,
@@ -535,7 +557,7 @@
       "label": "eslint",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L31",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "package_devdependencies_eslint",
       "community": 2,
@@ -546,7 +568,7 @@
       "label": "eslint",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L31",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "eslint",
       "community": 2,
@@ -557,7 +579,7 @@
       "label": "eslint-config-next",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L32",
+      "source_location": "L33",
       "_origin": "ast",
       "id": "package_devdependencies_eslint_config_next",
       "community": 2,
@@ -568,7 +590,7 @@
       "label": "eslint-config-next",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L32",
+      "source_location": "L33",
       "_origin": "ast",
       "id": "eslint_config_next",
       "community": 2,
@@ -579,7 +601,7 @@
       "label": "prisma",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L33",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "package_devdependencies_prisma",
       "community": 2,
@@ -590,7 +612,7 @@
       "label": "prisma",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L33",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "prisma",
       "community": 2,
@@ -601,7 +623,7 @@
       "label": "tailwindcss",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L34",
+      "source_location": "L35",
       "_origin": "ast",
       "id": "package_devdependencies_tailwindcss",
       "community": 2,
@@ -612,7 +634,7 @@
       "label": "tailwindcss",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L34",
+      "source_location": "L35",
       "_origin": "ast",
       "id": "tailwindcss",
       "community": 2,
@@ -623,7 +645,7 @@
       "label": "tsx",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L35",
+      "source_location": "L36",
       "_origin": "ast",
       "id": "package_devdependencies_tsx",
       "community": 2,
@@ -634,7 +656,7 @@
       "label": "tsx",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L35",
+      "source_location": "L36",
       "_origin": "ast",
       "id": "tsx",
       "community": 2,
@@ -645,7 +667,7 @@
       "label": "typescript",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L36",
+      "source_location": "L37",
       "_origin": "ast",
       "id": "package_devdependencies_typescript",
       "community": 2,
@@ -656,7 +678,7 @@
       "label": "typescript",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L36",
+      "source_location": "L37",
       "_origin": "ast",
       "id": "typescript",
       "community": 2,
@@ -667,7 +689,7 @@
       "label": "prisma",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L38",
+      "source_location": "L39",
       "_origin": "ast",
       "id": "package_prisma",
       "community": 7,
@@ -678,7 +700,7 @@
       "label": "seed",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L39",
+      "source_location": "L40",
       "_origin": "ast",
       "id": "package_prisma_seed",
       "community": 7,
@@ -1520,8 +1542,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_demo_stock_analysis_page",
-      "community": 1,
-      "community_name": "formatCurrency",
+      "community": 0,
+      "community_name": "db.ts",
       "norm_label": "stock-analysis/page.tsx"
     },
     {
@@ -1533,8 +1555,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_app_demo_stock_analysis_page_pageprops",
-      "community": 1,
-      "community_name": "formatCurrency",
+      "community": 0,
+      "community_name": "db.ts",
       "norm_label": "pageprops"
     },
     {
@@ -1545,8 +1567,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_app_demo_stock_analysis_page_stockanalysispage",
-      "community": 1,
-      "community_name": "formatCurrency",
+      "community": 0,
+      "community_name": "db.ts",
       "norm_label": "stockanalysispage()"
     },
     {
@@ -1921,8 +1943,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_api_stock_analysis_route",
-      "community": 1,
-      "community_name": "formatCurrency",
+      "community": 0,
+      "community_name": "db.ts",
       "norm_label": "stock-analysis/route.ts"
     },
     {
@@ -1933,8 +1955,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_app_api_stock_analysis_route_get",
-      "community": 1,
-      "community_name": "formatCurrency",
+      "community": 0,
+      "community_name": "db.ts",
       "norm_label": "get()"
     },
     {
@@ -2244,8 +2266,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_business_logic_financials",
-      "community": 1,
-      "community_name": "formatCurrency",
+      "community": 0,
+      "community_name": "db.ts",
       "norm_label": "financials.ts"
     },
     {
@@ -2377,8 +2399,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_business_logic_sales_analytics",
-      "community": 1,
-      "community_name": "formatCurrency",
+      "community": 0,
+      "community_name": "db.ts",
       "norm_label": "sales_analytics.ts"
     },
     {
@@ -2390,8 +2412,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_lib_business_logic_sales_analytics_saleshistoryitem",
-      "community": 1,
-      "community_name": "formatCurrency",
+      "community": 0,
+      "community_name": "db.ts",
       "norm_label": "saleshistoryitem"
     },
     {
@@ -2403,8 +2425,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_lib_business_logic_sales_analytics_salesanalytics",
-      "community": 1,
-      "community_name": "formatCurrency",
+      "community": 0,
+      "community_name": "db.ts",
       "norm_label": "salesanalytics"
     },
     {
@@ -2415,8 +2437,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_business_logic_sales_analytics_salesanalytics_calculateweightedvelocity",
-      "community": 1,
-      "community_name": "formatCurrency",
+      "community": 0,
+      "community_name": "db.ts",
       "norm_label": ".calculateweightedvelocity()"
     },
     {
@@ -2427,8 +2449,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_business_logic_sales_analytics_salesanalytics_diagnosestockvendibility",
-      "community": 1,
-      "community_name": "formatCurrency",
+      "community": 0,
+      "community_name": "db.ts",
       "norm_label": ".diagnosestockvendibility()"
     },
     {
@@ -2575,8 +2597,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tsconfig",
-      "community": 9,
-      "community_name": "Layout y Navegaci\u00f3n Principal",
+      "community": 4,
+      "community_name": "compilerOptions",
       "norm_label": "tsconfig.json"
     },
     {
@@ -2587,7 +2609,7 @@
       "_origin": "ast",
       "id": "tsconfig_compileroptions",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "compileroptions"
     },
     {
@@ -2598,7 +2620,7 @@
       "_origin": "ast",
       "id": "tsconfig_compileroptions_target",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "target"
     },
     {
@@ -2609,7 +2631,7 @@
       "_origin": "ast",
       "id": "tsconfig_compileroptions_lib",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "lib"
     },
     {
@@ -2620,7 +2642,7 @@
       "_origin": "ast",
       "id": "ref_dom",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "dom"
     },
     {
@@ -2631,7 +2653,7 @@
       "_origin": "ast",
       "id": "ref_dom_iterable",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "dom.iterable"
     },
     {
@@ -2642,7 +2664,7 @@
       "_origin": "ast",
       "id": "ref_esnext",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "esnext"
     },
     {
@@ -2653,7 +2675,7 @@
       "_origin": "ast",
       "id": "tsconfig_compileroptions_allowjs",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "allowjs"
     },
     {
@@ -2664,7 +2686,7 @@
       "_origin": "ast",
       "id": "tsconfig_compileroptions_skiplibcheck",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "skiplibcheck"
     },
     {
@@ -2675,7 +2697,7 @@
       "_origin": "ast",
       "id": "tsconfig_compileroptions_strict",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "strict"
     },
     {
@@ -2686,7 +2708,7 @@
       "_origin": "ast",
       "id": "tsconfig_compileroptions_noemit",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "noemit"
     },
     {
@@ -2697,7 +2719,7 @@
       "_origin": "ast",
       "id": "tsconfig_compileroptions_esmoduleinterop",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "esmoduleinterop"
     },
     {
@@ -2708,7 +2730,7 @@
       "_origin": "ast",
       "id": "tsconfig_compileroptions_module",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "module"
     },
     {
@@ -2719,7 +2741,7 @@
       "_origin": "ast",
       "id": "tsconfig_compileroptions_moduleresolution",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "moduleresolution"
     },
     {
@@ -2730,7 +2752,7 @@
       "_origin": "ast",
       "id": "tsconfig_compileroptions_resolvejsonmodule",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "resolvejsonmodule"
     },
     {
@@ -2741,7 +2763,7 @@
       "_origin": "ast",
       "id": "tsconfig_compileroptions_isolatedmodules",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "isolatedmodules"
     },
     {
@@ -2752,7 +2774,7 @@
       "_origin": "ast",
       "id": "tsconfig_compileroptions_jsx",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "jsx"
     },
     {
@@ -2763,7 +2785,7 @@
       "_origin": "ast",
       "id": "tsconfig_compileroptions_incremental",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "incremental"
     },
     {
@@ -2774,7 +2796,7 @@
       "_origin": "ast",
       "id": "tsconfig_compileroptions_plugins",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "plugins"
     },
     {
@@ -2785,7 +2807,7 @@
       "_origin": "ast",
       "id": "tsconfig_compileroptions_paths",
       "community": 4,
-      "community_name": "Base de Datos y Rutas de API",
+      "community_name": "compilerOptions",
       "norm_label": "paths"
     },
     {
@@ -2795,8 +2817,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "tsconfig_include",
-      "community": 9,
-      "community_name": "Layout y Navegaci\u00f3n Principal",
+      "community": 4,
+      "community_name": "compilerOptions",
       "norm_label": "include"
     },
     {
@@ -2806,8 +2828,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "ref_next_env_d_ts",
-      "community": 9,
-      "community_name": "Layout y Navegaci\u00f3n Principal",
+      "community": 4,
+      "community_name": "compilerOptions",
       "norm_label": "next-env.d.ts"
     },
     {
@@ -2817,8 +2839,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "ref_ts",
-      "community": 9,
-      "community_name": "Layout y Navegaci\u00f3n Principal",
+      "community": 4,
+      "community_name": "compilerOptions",
       "norm_label": "**/*.ts"
     },
     {
@@ -2828,8 +2850,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "ref_tsx",
-      "community": 9,
-      "community_name": "Layout y Navegaci\u00f3n Principal",
+      "community": 4,
+      "community_name": "compilerOptions",
       "norm_label": "**/*.tsx"
     },
     {
@@ -2839,8 +2861,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "ref_next_types_ts",
-      "community": 9,
-      "community_name": "Layout y Navegaci\u00f3n Principal",
+      "community": 4,
+      "community_name": "compilerOptions",
       "norm_label": ".next/types/**/*.ts"
     },
     {
@@ -2850,8 +2872,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "ref_next_dev_types_ts",
-      "community": 9,
-      "community_name": "Layout y Navegaci\u00f3n Principal",
+      "community": 4,
+      "community_name": "compilerOptions",
       "norm_label": ".next/dev/types/**/*.ts"
     },
     {
@@ -2861,8 +2883,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "ref_mts",
-      "community": 9,
-      "community_name": "Layout y Navegaci\u00f3n Principal",
+      "community": 4,
+      "community_name": "compilerOptions",
       "norm_label": "**/*.mts"
     },
     {
@@ -2872,8 +2894,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "tsconfig_exclude",
-      "community": 9,
-      "community_name": "Layout y Navegaci\u00f3n Principal",
+      "community": 4,
+      "community_name": "compilerOptions",
       "norm_label": "exclude"
     },
     {
@@ -2883,8 +2905,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "ref_node_modules",
-      "community": 9,
-      "community_name": "Layout y Navegaci\u00f3n Principal",
+      "community": 4,
+      "community_name": "compilerOptions",
       "norm_label": "node_modules"
     },
     {
@@ -3211,7 +3233,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package",
@@ -3233,7 +3255,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L38",
+      "source_location": "L39",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package",
@@ -3446,6 +3468,17 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_dependencies",
+      "target": "package_dependencies_resend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "package_dependencies",
       "target": "package_dependencies_ws",
       "confidence_score": 1.0
     },
@@ -3577,19 +3610,20 @@
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
-      "source": "package_dependencies_ws",
-      "target": "ws",
+      "source": "package_dependencies_resend",
+      "target": "resend",
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L31",
+      "source_location": "L24",
       "weight": 1.0,
+      "context": "import",
       "_origin": "ast",
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_eslint",
+      "source": "package_dependencies_ws",
+      "target": "ws",
       "confidence_score": 1.0
     },
     {
@@ -3600,7 +3634,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
-      "target": "package_devdependencies_eslint_config_next",
+      "target": "package_devdependencies_eslint",
       "confidence_score": 1.0
     },
     {
@@ -3611,7 +3645,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
-      "target": "package_devdependencies_prisma",
+      "target": "package_devdependencies_eslint_config_next",
       "confidence_score": 1.0
     },
     {
@@ -3622,18 +3656,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
-      "target": "package_devdependencies_tailwindcss",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L26",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_tailwindcss_postcss",
+      "target": "package_devdependencies_prisma",
       "confidence_score": 1.0
     },
     {
@@ -3644,7 +3667,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
-      "target": "package_devdependencies_tsx",
+      "target": "package_devdependencies_tailwindcss",
       "confidence_score": 1.0
     },
     {
@@ -3655,40 +3678,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
-      "target": "package_devdependencies_types_node",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L28",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_types_react",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L29",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_types_react_dom",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L30",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_types_ws",
+      "target": "package_devdependencies_tailwindcss_postcss",
       "confidence_score": 1.0
     },
     {
@@ -3699,6 +3689,61 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
+      "target": "package_devdependencies_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "package_devdependencies",
+      "target": "package_devdependencies_types_node",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "package_devdependencies",
+      "target": "package_devdependencies_types_react",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L30",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "package_devdependencies",
+      "target": "package_devdependencies_types_react_dom",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L31",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "package_devdependencies",
+      "target": "package_devdependencies_types_ws",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "package_devdependencies",
       "target": "package_devdependencies_typescript",
       "confidence_score": 1.0
     },
@@ -3706,7 +3751,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -3718,7 +3763,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -3730,7 +3775,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L28",
+      "source_location": "L29",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -3742,7 +3787,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L29",
+      "source_location": "L30",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -3754,7 +3799,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L30",
+      "source_location": "L31",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -3766,7 +3811,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L31",
+      "source_location": "L32",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -3778,7 +3823,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L32",
+      "source_location": "L33",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -3790,7 +3835,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L33",
+      "source_location": "L34",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -3802,7 +3847,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L34",
+      "source_location": "L35",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -3814,7 +3859,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L35",
+      "source_location": "L36",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -3826,7 +3871,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L36",
+      "source_location": "L37",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -3838,7 +3883,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L39",
+      "source_location": "L40",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_prisma",
@@ -6875,5 +6920,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "cc696f69eb54d773badeea3687aee2da39abdfef"
+  "built_at_commit": "0ee41f62c5e9fd5c2adb1d0ac428f414cc5ce764"
 }

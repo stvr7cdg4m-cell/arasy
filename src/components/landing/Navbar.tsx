@@ -50,13 +50,13 @@ export default function Navbar() {
           </a>
         </nav>
 
-        {/* Actions & CTA */}
+        {/* Actions & CTA (Argentine voseo) */}
         <div className="hidden md:flex items-center gap-3">
           <a
             href="#contacto"
             className="bg-gradient-to-r from-blue-600 via-blue-500 to-teal-400 hover:from-blue-500 hover:to-teal-300 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/35 hover:-translate-y-0.5 transition-all flex items-center gap-2"
           >
-            <span>Agendar Consulta</span>
+            <span>Agendá una Consulta</span>
             <span className="material-symbols-outlined text-base">calendar_today</span>
           </a>
         </div>
@@ -109,7 +109,7 @@ export default function Navbar() {
             onClick={() => setMobileMenuOpen(false)}
             className="block w-full text-center bg-gradient-to-r from-blue-600 to-teal-400 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-600/20 text-base mt-2"
           >
-            Agendar Consulta
+            Agendá una Consulta
           </a>
         </div>
       )}

@@ -1824,7 +1824,7 @@
       "label": "POST()",
       "file_type": "code",
       "source_file": "src/app/api/contact/route.ts",
-      "source_location": "L3",
+      "source_location": "L8",
       "_callable": true,
       "_origin": "ast",
       "id": "src_app_api_contact_route_post",
@@ -5735,7 +5735,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/api/contact/route.ts",
-      "source_location": "L3",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_app_api_contact_route",
@@ -6920,5 +6920,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0ee41f62c5e9fd5c2adb1d0ac428f414cc5ce764"
+  "built_at_commit": "bdd9a4261d82455b31fe172de0a546209a4e8cb4"
 }

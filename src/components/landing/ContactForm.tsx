@@ -37,7 +37,7 @@ export default function ContactForm() {
         setError(data.error || "Ocurrió un error al enviar tu consulta.");
       }
     } catch {
-      setError("Error de red. Por favor intenta nuevamente.");
+      setError("Error de red. Por favor intentá nuevamente.");
     } finally {
       setLoading(false);
     }
@@ -49,9 +49,9 @@ export default function ContactForm() {
         <div className="w-16 h-16 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-4 border border-emerald-500/40">
           <span className="material-symbols-outlined text-3xl">check_circle</span>
         </div>
-        <h3 className="text-2xl font-bold text-white mb-2">¡Sesión Solicitada!</h3>
+        <h3 className="text-2xl font-bold text-white mb-2">¡Solicitud Recibida!</h3>
         <p className="text-slate-300 text-sm max-w-md mx-auto mb-6">
-          Gracias por ponerte en contacto. Analizaremos los datos de tu marca y te escribiremos por WhatsApp/Email en menos de 24 horas para agendar la llamada estratégica.
+          Gracias por ponerte en contacto. Analizamos los datos de tu marca y te escribimos por WhatsApp/Email en menos de 24 horas para agendar la llamada estratégica.
         </p>
         <button
           onClick={() => {
@@ -86,10 +86,10 @@ export default function ContactForm() {
           <span>Diagnóstico Estratégico Sin Costo</span>
         </div>
         <h3 className="text-xl font-bold text-white flex items-center gap-2">
-          Agendar Sesión de Consultoría
+          Agendá tu Sesión de Consultoría
         </h3>
         <p className="text-xs text-slate-400 mt-1">
-          Cuéntanos sobre tu comercio para analizar tus canales y enviarte una propuesta de aceleración.
+          Completá tus datos para analizar tus canales y enviarte una propuesta de aceleración a medida.
         </p>
       </div>
 
@@ -214,7 +214,7 @@ export default function ContactForm() {
           rows={3}
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-          placeholder="Cuéntanos brevemente sobre tu catálogo, volumen de ventas o principales inquietudes..."
+          placeholder="Contanos brevemente sobre tu catálogo, volumen de ventas o principales desafíos..."
           className="w-full bg-slate-950/70 border border-slate-700/70 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
         ></textarea>
       </div>

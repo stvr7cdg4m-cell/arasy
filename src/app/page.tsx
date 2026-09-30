@@ -19,11 +19,11 @@ export default function LandingPage() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold mb-6 animate-fade-in">
             <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
-            <span>Consultoría Especializada en E-Commerce & Retail Multicanal</span>
+            <span>Consultoría Estratégica en E-Commerce & Retail Multicanal</span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-white tracking-tight leading-[1.1] mb-6">
-            Escala la rentabilidad de tu E-Commerce y domina tus{" "}
+            Escalá la rentabilidad de tu E-Commerce y dominá tus{" "}
             <span className="bg-gradient-to-r from-blue-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">
               Canales de Venta
             </span>
@@ -38,7 +38,7 @@ export default function LandingPage() {
               href="#contacto"
               className="w-full sm:w-auto bg-gradient-to-r from-blue-600 via-blue-500 to-teal-400 hover:from-blue-500 hover:to-teal-300 text-white font-semibold text-base px-8 py-4 rounded-xl shadow-xl shadow-blue-600/25 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
             >
-              <span>Agendar Diagnóstico Gratuito</span>
+              <span>Agendá un Diagnóstico Gratuito</span>
               <span className="material-symbols-outlined">arrow_forward</span>
             </a>
 
@@ -46,7 +46,7 @@ export default function LandingPage() {
               href="#servicios"
               className="w-full sm:w-auto bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-slate-700/80 font-medium text-base px-8 py-4 rounded-xl transition-all flex items-center justify-center gap-2"
             >
-              <span>Ver Soluciones de Consultoría</span>
+              <span>Conocé nuestros Servicios</span>
               <span className="material-symbols-outlined">explore</span>
             </a>
           </div>
@@ -96,7 +96,7 @@ export default function LandingPage() {
       <section id="plataformas" className="py-12 border-y border-slate-800/80 bg-slate-950/60 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <p className="text-center text-xs font-semibold text-slate-400 uppercase tracking-widest mb-8">
-            Expertos en Integración y Estrategia para las Principales Plataformas del Mercado
+            Especialistas en Integración y Estrategia para las Principales Plataformas del Mercado
           </p>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 items-center justify-items-center opacity-85">
@@ -267,7 +267,7 @@ export default function LandingPage() {
               5. Implementación BI & Tecnología Arasy
             </h4>
             <p className="text-slate-300 text-sm leading-relaxed mb-4">
-              Desplegamos nuestro sistema propietario **Arasy Control Tower** para darte visibilidad en tiempo real de tus ventas, stock en riesgo y métricas clave en un solo tablero.
+              Desplegamos nuestra plataforma **Arasy Control Tower** para darte visibilidad en tiempo real de tus ventas, stock en riesgo y métricas clave en un solo tablero.
             </p>
             <ul className="space-y-2 text-xs text-slate-400">
               <li className="flex items-center gap-2">
@@ -364,7 +364,7 @@ export default function LandingPage() {
                 <span>Tecnología Interna de Apoyo</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-white">
-                Potenciados por la Plataforma Analítica Arasy
+                Potenciados por nuestra Plataforma Analítica Arasy
               </h2>
               <p className="text-slate-300 text-sm leading-relaxed">
                 A diferencia de consultoras tradicionales que entregan reportes estáticos en planillas, nuestros clientes cuentan con el respaldo de **Arasy**: nuestra plataforma propietaria para monitorear stock, simular combinaciones de productos y recibir recomendaciones prescriptivas en vivo.
@@ -391,13 +391,13 @@ export default function LandingPage() {
               </div>
               <h3 className="text-lg font-bold text-white">Demostración en Reuniones</h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Durante la sesión estratégica, te mostraremos cómo funciona la plataforma Arasy simulando escenarios específicos para tu tipo de catálogo.
+                En la sesión estratégica te mostramos cómo funciona la plataforma Arasy simulando escenarios reales para tu catálogo.
               </p>
               <a
                 href="#contacto"
                 className="inline-flex items-center gap-2 text-xs font-bold text-teal-400 hover:text-teal-300 transition-colors"
               >
-                <span>Solicitar llamada con demostración</span>
+                <span>Pedí tu llamada con demostración</span>
                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </a>
             </div>
@@ -416,7 +416,7 @@ export default function LandingPage() {
               ¿Listo para acelerar tus ventas y optimizar tu rentabilidad?
             </h2>
             <p className="text-slate-300 text-sm leading-relaxed">
-              Completa el formulario y coordinaremos una llamada estratégica de 30 minutos para analizar la situación actual de tu e-commerce, tus canales de venta y darte un diagnóstico inicial.
+              Completá el formulario y coordinamos una llamada estratégica de 30 minutos para analizar la situación actual de tu e-commerce, tus canales de venta y darte un diagnóstico inicial.
             </p>
 
             <div className="space-y-3 pt-2 text-xs text-slate-300">
@@ -450,7 +450,7 @@ export default function LandingPage() {
       {/* FOOTER */}
       <footer className="border-t border-slate-800/80 bg-slate-950 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <Image
               src="/logo-negativo.svg"
               alt="ARASY Logo"
