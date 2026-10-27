@@ -576,7 +576,64 @@ export async function inspectMeliItem(input: string): Promise<MeliInspectedItem>
 
   // 1. Obtener publicación
   const itemRes = await fetch(`https://api.mercadolibre.com/items/${cleanId}`, { headers });
+  
   if (!itemRes.ok) {
+    // Si da 403 o 404, verificar si se trata de un ID de producto de Catálogo (/products/{cleanId})
+    try {
+      const prodRes = await fetch(`https://api.mercadolibre.com/products/${cleanId}`, { headers });
+      if (prodRes.ok) {
+        const prod = await prodRes.json();
+        const pictures: string[] = Array.isArray(prod.pictures)
+          ? prod.pictures.map((p: { url?: string; secure_url?: string }) => p.secure_url || p.url || "")
+          : [];
+        const attributes = Array.isArray(prod.attributes)
+          ? prod.attributes.slice(0, 10).map((a: { name?: string; value_name?: string }) => ({
+              name: a.name || "",
+              value: a.value_name || "",
+            }))
+          : [];
+
+        return {
+          id: cleanId,
+          title: prod.name || "Producto de Catálogo",
+          price: 0,
+          original_price: 0,
+          currency_id: "ARS",
+          sold_quantity: 0,
+          available_quantity: 0,
+          estimated_revenue: 0,
+          permalink: prod.permalink || `https://www.mercadolibre.com.ar/p/${cleanId}`,
+          thumbnail: pictures[0] || "",
+          condition: "Ficha Técnica Oficial",
+          listing_type_id: "catalog_product",
+          category_id: prod.domain_id || "",
+          category_name: `Catálogo Oficial (${prod.domain_id || "MLA"})`,
+          warranty: "Garantía según vendedor de Buy Box",
+          free_shipping: true,
+          seller: {
+            id: "CATALOG",
+            nickname: "Catálogo Mercado Libre",
+            reputation_level: "5_green",
+            power_seller_status: "official",
+          },
+          pictures,
+          attributes,
+        };
+      }
+    } catch {
+      // Ignorar fallback secundario
+    }
+
+    if (itemRes.status === 403) {
+      throw new Error(
+        `Mercado Libre restringió el acceso directo a la publicación ${cleanId} (Error 403: access_denied). Por políticas de privacidad del marketplace, la API solo permite ver el detalle de inventario de publicaciones de tu propia cuenta o de productos de Catálogo público. Te sugerimos buscar este producto por nombre/marca en la pestaña "Buscador de Catálogo ML".`
+      );
+    }
+
+    if (itemRes.status === 404) {
+      throw new Error(`El artículo ${cleanId} no fue encontrado o la publicación ya finalizó en Mercado Libre.`);
+    }
+
     throw new Error(`Error ${itemRes.status} al consultar el artículo ${cleanId}. Verificá que exista y esté activo.`);
   }
 

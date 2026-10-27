@@ -856,9 +856,30 @@ export default function ClientMarketRadar() {
 
           {/* Error Banner */}
           {inspectError && (
-            <div className="p-4 bg-rose-50 border border-rose-200 rounded-xl text-sm text-rose-700 flex items-center gap-3">
-              <span className="material-symbols-outlined text-rose-500">error</span>
-              <span>{inspectError}</span>
+            <div className="p-4 bg-rose-50 border border-rose-200 rounded-xl text-sm text-rose-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-start sm:items-center gap-3">
+                <span className="material-symbols-outlined text-rose-500 mt-0.5 sm:mt-0 flex-shrink-0">
+                  shield_locked
+                </span>
+                <span className="leading-relaxed">{inspectError}</span>
+              </div>
+              <button
+                onClick={() => {
+                  let kw = inspectQuery;
+                  const slugMatch = inspectQuery.match(/MLA-?\d+-?([a-zA-Z0-9-]+)/);
+                  if (slugMatch && slugMatch[1]) {
+                    kw = slugMatch[1].replace(/-/g, " ");
+                  }
+                  setCatalogQuery(kw);
+                  startTransition(() => {
+                    setActiveTab("catalog");
+                  });
+                }}
+                className="px-3.5 py-2 bg-midnight text-white text-xs font-semibold rounded-lg hover:bg-midnight/90 transition flex-shrink-0 flex items-center gap-1.5 self-start sm:self-auto"
+              >
+                <span className="material-symbols-outlined text-sm">category</span>
+                <span>Explorar en Catálogo ML</span>
+              </button>
             </div>
           )}
 
