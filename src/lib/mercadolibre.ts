@@ -406,6 +406,21 @@ export interface MeliCatalogProduct {
   rating?: number;
 }
 
+export interface MeliCompetitorOffer {
+  itemId: string;
+  sellerId: number | string;
+  sellerNickname: string;
+  sellerReputation?: string;
+  sellerTransactions?: number;
+  powerSellerStatus?: string | null;
+  price: number;
+  originalPrice?: number | null;
+  freeShipping: boolean;
+  logisticType?: string;
+  city?: string;
+  warranty?: string;
+}
+
 export interface MeliInspectedItem {
   id: string;
   title: string;
@@ -428,9 +443,15 @@ export interface MeliInspectedItem {
     nickname: string;
     reputation_level?: string;
     power_seller_status?: string | null;
+    total_sales?: number;
   };
   pictures: string[];
   attributes: Array<{ name: string; value: string }>;
+  is_catalog?: boolean;
+  total_competitors?: number;
+  min_competitor_price?: number;
+  max_competitor_price?: number;
+  competitors?: MeliCompetitorOffer[];
 }
 
 /**
@@ -593,31 +614,111 @@ export async function inspectMeliItem(input: string): Promise<MeliInspectedItem>
             }))
           : [];
 
+        // Consultar ofertas de la competencia en el catálogo
+        let totalCompetitors = 0;
+        let minCompetitorPrice = 0;
+        let maxCompetitorPrice = 0;
+        const competitors: MeliCompetitorOffer[] = [];
+
+        try {
+          const compRes = await fetch(`https://api.mercadolibre.com/products/${cleanId}/items`, { headers });
+          if (compRes.ok) {
+            const compData = await compRes.json();
+            const rawOffers = (compData.results || []) as Array<{
+              item_id?: string;
+              seller_id?: number | string;
+              price?: number;
+              original_price?: number;
+              warranty?: string;
+              shipping?: { free_shipping?: boolean; logistic_type?: string };
+              seller_address?: { city?: { name?: string }; state?: { name?: string } };
+            }>;
+
+            totalCompetitors = compData.paging?.total || rawOffers.length;
+
+            const validPrices = rawOffers
+              .map((o) => Number(o.price) || 0)
+              .filter((p) => p > 0);
+
+            if (validPrices.length > 0) {
+              minCompetitorPrice = Math.min(...validPrices);
+              maxCompetitorPrice = Math.max(...validPrices);
+            }
+
+            for (const off of rawOffers.slice(0, 5)) {
+              let nickname = `Vendedor ${off.seller_id}`;
+              let repLevel = "Desconocido";
+              let powerSeller: string | null = null;
+              let totalSales = 0;
+
+              if (off.seller_id) {
+                try {
+                  const sRes = await fetch(`https://api.mercadolibre.com/users/${off.seller_id}`, { headers });
+                  if (sRes.ok) {
+                    const sData = await sRes.json();
+                    nickname = sData.nickname || nickname;
+                    repLevel = sData.seller_reputation?.level_id || repLevel;
+                    powerSeller = sData.seller_reputation?.power_seller_status || null;
+                    totalSales = Number(sData.seller_reputation?.transactions?.total) || 0;
+                  }
+                } catch {
+                  // ignorar fallo de vendedor
+                }
+              }
+
+              competitors.push({
+                itemId: off.item_id || "",
+                sellerId: off.seller_id || 0,
+                sellerNickname: nickname,
+                sellerReputation: repLevel,
+                sellerTransactions: totalSales,
+                powerSellerStatus: powerSeller,
+                price: Number(off.price) || 0,
+                originalPrice: off.original_price ? Number(off.original_price) : null,
+                freeShipping: off.shipping?.free_shipping || false,
+                logisticType: off.shipping?.logistic_type || "normal",
+                city: off.seller_address?.city?.name || off.seller_address?.state?.name || "Argentina",
+                warranty: off.warranty || "Garantía estándar",
+              });
+            }
+          }
+        } catch {
+          // Ignorar fallo de ofertas secundarias
+        }
+
+        const bestSeller = competitors[0];
+
         return {
           id: cleanId,
           title: prod.name || "Producto de Catálogo",
-          price: 0,
-          original_price: 0,
+          price: minCompetitorPrice || 0,
+          original_price: maxCompetitorPrice || minCompetitorPrice || 0,
           currency_id: "ARS",
-          sold_quantity: 0,
-          available_quantity: 0,
-          estimated_revenue: 0,
+          sold_quantity: bestSeller?.sellerTransactions || 0,
+          available_quantity: totalCompetitors,
+          estimated_revenue: (minCompetitorPrice || 0) * (bestSeller?.sellerTransactions || 0),
           permalink: prod.permalink || `https://www.mercadolibre.com.ar/p/${cleanId}`,
           thumbnail: pictures[0] || "",
-          condition: "Ficha Técnica Oficial",
+          condition: "Ficha Oficial de Catálogo",
           listing_type_id: "catalog_product",
           category_id: prod.domain_id || "",
           category_name: `Catálogo Oficial (${prod.domain_id || "MLA"})`,
-          warranty: "Garantía según vendedor de Buy Box",
-          free_shipping: true,
+          warranty: bestSeller?.warranty || "Garantía según vendedor de Buy Box",
+          free_shipping: bestSeller?.freeShipping ?? true,
           seller: {
-            id: "CATALOG",
-            nickname: "Catálogo Mercado Libre",
-            reputation_level: "5_green",
-            power_seller_status: "official",
+            id: bestSeller?.sellerId || "CATALOG",
+            nickname: bestSeller ? `${bestSeller.sellerNickname} (Buy Box Winner)` : "Catálogo Mercado Libre",
+            reputation_level: bestSeller?.sellerReputation || "5_green",
+            power_seller_status: bestSeller?.powerSellerStatus || "platinum",
+            total_sales: bestSeller?.sellerTransactions || 0,
           },
           pictures,
           attributes,
+          is_catalog: true,
+          total_competitors: totalCompetitors,
+          min_competitor_price: minCompetitorPrice,
+          max_competitor_price: maxCompetitorPrice,
+          competitors,
         };
       }
     } catch {

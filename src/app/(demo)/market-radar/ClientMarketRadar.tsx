@@ -60,6 +60,24 @@ interface InspectedItem {
   };
   pictures: string[];
   attributes: Array<{ name: string; value: string }>;
+  is_catalog?: boolean;
+  total_competitors?: number;
+  min_competitor_price?: number;
+  max_competitor_price?: number;
+  competitors?: Array<{
+    itemId: string;
+    sellerId: number | string;
+    sellerNickname: string;
+    sellerReputation?: string;
+    sellerTransactions?: number;
+    powerSellerStatus?: string | null;
+    price: number;
+    originalPrice?: number | null;
+    freeShipping: boolean;
+    logisticType?: string;
+    city?: string;
+    warranty?: string;
+  }>;
 }
 
 interface WatchlistItem {
@@ -839,17 +857,37 @@ export default function ClientMarketRadar() {
             </div>
 
             {/* Quick sample chips */}
-            <div className="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 text-xs text-slate-400">
-              <span>Probar ejemplo rápido:</span>
+            <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-slate-100 text-xs text-slate-400">
+              <span>Probar ejemplos reales:</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setInspectQuery("MLA15542577");
+                  handleInspect("MLA15542577");
+                }}
+                className="px-2 py-0.5 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded font-semibold border border-amber-200"
+              >
+                MLA15542577 (Termo Stanley - 53 competidores)
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setInspectQuery("MLA18648076");
+                  handleInspect("MLA18648076");
+                }}
+                className="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded font-mono"
+              >
+                MLA18648076 (Licuadora Peabody)
+              </button>
               <button
                 type="button"
                 onClick={() => {
                   setInspectQuery("MLA3868538946");
                   handleInspect("MLA3868538946");
                 }}
-                className="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 rounded text-slate-700 font-mono"
+                className="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded font-mono"
               >
-                MLA3868538946 (Horno Ariston)
+                MLA3868538946 (Publicación propia)
               </button>
             </div>
           </div>
@@ -1040,6 +1078,89 @@ export default function ClientMarketRadar() {
                             <strong>{attr.name}:</strong> {attr.value}
                           </span>
                         ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Competitor Benchmark Table if available */}
+                  {inspectedItem.competitors && inspectedItem.competitors.length > 0 && (
+                    <div className="pt-4 border-t border-slate-100 space-y-3">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                          <h4 className="text-sm font-bold text-midnight flex items-center gap-2">
+                            <span className="material-symbols-outlined text-amber-500 text-base">groups</span>
+                            Benchmark de Vendedores y Ofertas de la Competencia
+                          </h4>
+                          <p className="text-xs text-slate-400">
+                            {inspectedItem.total_competitors} vendedores compitiendo por este producto en Mercado Libre.
+                          </p>
+                        </div>
+                        {inspectedItem.min_competitor_price && inspectedItem.max_competitor_price && (
+                          <div className="text-xs bg-slate-100 px-3 py-1.5 rounded-lg text-slate-700 font-medium self-start sm:self-auto">
+                            Rango: <strong>{formatCurrency(inspectedItem.min_competitor_price)}</strong> - <strong>{formatCurrency(inspectedItem.max_competitor_price)}</strong>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="overflow-x-auto rounded-xl border border-slate-200">
+                        <table className="w-full text-left border-collapse text-xs">
+                          <thead>
+                            <tr className="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200">
+                              <th className="py-2.5 px-3">Vendedor Competidor</th>
+                              <th className="py-2.5 px-3">Ventas Totales</th>
+                              <th className="py-2.5 px-3 text-right">Precio de Venta</th>
+                              <th className="py-2.5 px-3">Logística / Envío</th>
+                              <th className="py-2.5 px-3">Ubicación</th>
+                              <th className="py-2.5 px-3 text-right">Acción</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-slate-100">
+                            {inspectedItem.competitors.map((comp, cIdx) => (
+                              <tr key={cIdx} className="hover:bg-slate-50/80 transition">
+                                <td className="py-2.5 px-3 font-bold text-midnight">
+                                  <div className="flex items-center gap-1.5">
+                                    {cIdx === 0 && (
+                                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-400 text-midnight">
+                                        🏆 Buy Box
+                                      </span>
+                                    )}
+                                    <span>{comp.sellerNickname}</span>
+                                    {comp.powerSellerStatus && (
+                                      <span className="text-[10px] font-bold text-emerald-600 capitalize">
+                                        • {comp.powerSellerStatus}
+                                      </span>
+                                    )}
+                                  </div>
+                                </td>
+                                <td className="py-2.5 px-3 text-slate-600 font-semibold">
+                                  {comp.sellerTransactions ? `+${formatNumber(comp.sellerTransactions)} ventas` : "Nuevo"}
+                                </td>
+                                <td className="py-2.5 px-3 text-right font-black text-midnight">
+                                  {formatCurrency(comp.price)}
+                                </td>
+                                <td className="py-2.5 px-3 text-slate-600">
+                                  <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${comp.freeShipping ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600"}`}>
+                                    {comp.freeShipping ? "Gratis" : "Con costo"} • {comp.logisticType}
+                                  </span>
+                                </td>
+                                <td className="py-2.5 px-3 text-slate-500">
+                                  {comp.city}
+                                </td>
+                                <td className="py-2.5 px-3 text-right">
+                                  <a
+                                    href={`https://articulo.mercadolibre.com.ar/${comp.itemId}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-amber-600 hover:text-amber-800 font-semibold inline-flex items-center gap-0.5"
+                                  >
+                                    <span>Ver</span>
+                                    <span className="material-symbols-outlined text-xs">open_in_new</span>
+                                  </a>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
                       </div>
                     </div>
                   )}

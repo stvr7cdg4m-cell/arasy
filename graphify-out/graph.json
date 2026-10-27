@@ -1409,7 +1409,7 @@
       "label": "WatchlistItem",
       "file_type": "code",
       "source_file": "src/app/(demo)/market-radar/ClientMarketRadar.tsx",
-      "source_location": "L65",
+      "source_location": "L83",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
@@ -1422,7 +1422,7 @@
       "label": "ClientMarketRadar()",
       "file_type": "code",
       "source_file": "src/app/(demo)/market-radar/ClientMarketRadar.tsx",
-      "source_location": "L82",
+      "source_location": "L100",
       "_callable": true,
       "_origin": "ast",
       "id": "src_app_demo_market_radar_clientmarketradar_clientmarketradar",
@@ -1471,8 +1471,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_demo_mix_optimizer_clientmixoptimizer",
-      "community": 10,
-      "community_name": "ClientMixOptimizer.tsx",
+      "community": 1,
+      "community_name": "formatCurrency",
       "norm_label": "clientmixoptimizer.tsx"
     },
     {
@@ -1484,8 +1484,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_app_demo_mix_optimizer_clientmixoptimizer_extendedskumixitem",
-      "community": 10,
-      "community_name": "ClientMixOptimizer.tsx",
+      "community": 1,
+      "community_name": "formatCurrency",
       "norm_label": "extendedskumixitem"
     },
     {
@@ -1497,8 +1497,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_app_demo_mix_optimizer_clientmixoptimizer_clientmixoptimizerprops",
-      "community": 10,
-      "community_name": "ClientMixOptimizer.tsx",
+      "community": 1,
+      "community_name": "formatCurrency",
       "norm_label": "clientmixoptimizerprops"
     },
     {
@@ -1509,8 +1509,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_app_demo_mix_optimizer_clientmixoptimizer_clientmixoptimizer",
-      "community": 10,
-      "community_name": "ClientMixOptimizer.tsx",
+      "community": 1,
+      "community_name": "formatCurrency",
       "norm_label": "clientmixoptimizer()"
     },
     {
@@ -1520,8 +1520,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_demo_mix_optimizer_page",
-      "community": 10,
-      "community_name": "ClientMixOptimizer.tsx",
+      "community": 1,
+      "community_name": "formatCurrency",
       "norm_label": "mix-optimizer/page.tsx"
     },
     {
@@ -1533,8 +1533,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_app_demo_mix_optimizer_page_pageprops",
-      "community": 10,
-      "community_name": "ClientMixOptimizer.tsx",
+      "community": 1,
+      "community_name": "formatCurrency",
       "norm_label": "pageprops"
     },
     {
@@ -1545,8 +1545,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_app_demo_mix_optimizer_page_mixoptimizerpage",
-      "community": 10,
-      "community_name": "ClientMixOptimizer.tsx",
+      "community": 1,
+      "community_name": "formatCurrency",
       "norm_label": "mixoptimizerpage()"
     },
     {
@@ -2716,8 +2716,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_lib_business_logic_financials_financials",
-      "community": 1,
-      "community_name": "formatCurrency",
+      "community": 0,
+      "community_name": "db.ts",
       "norm_label": "financials"
     },
     {
@@ -2728,8 +2728,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_business_logic_financials_financials_getchannelcommission",
-      "community": 1,
-      "community_name": "formatCurrency",
+      "community": 0,
+      "community_name": "db.ts",
       "norm_label": ".getchannelcommission()"
     },
     {
@@ -2740,8 +2740,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_business_logic_financials_financials_calculatenetmargin",
-      "community": 1,
-      "community_name": "formatCurrency",
+      "community": 0,
+      "community_name": "db.ts",
       "norm_label": ".calculatenetmargin()"
     },
     {
@@ -2752,8 +2752,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_business_logic_financials_financials_calculategrossmargin",
-      "community": 1,
-      "community_name": "formatCurrency",
+      "community": 0,
+      "community_name": "db.ts",
       "norm_label": ".calculategrossmargin()"
     },
     {
@@ -2763,8 +2763,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_business_logic_mixengine",
-      "community": 10,
-      "community_name": "ClientMixOptimizer.tsx",
+      "community": 1,
+      "community_name": "formatCurrency",
       "norm_label": "mixengine.ts"
     },
     {
@@ -2776,8 +2776,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_lib_business_logic_mixengine_skumixitem",
-      "community": 10,
-      "community_name": "ClientMixOptimizer.tsx",
+      "community": 1,
+      "community_name": "formatCurrency",
       "norm_label": "skumixitem"
     },
     {
@@ -2789,8 +2789,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_lib_business_logic_mixengine_mixcalculationresult",
-      "community": 10,
-      "community_name": "ClientMixOptimizer.tsx",
+      "community": 1,
+      "community_name": "formatCurrency",
       "norm_label": "mixcalculationresult"
     },
     {
@@ -2801,8 +2801,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_business_logic_mixengine_calculatemixmetrics",
-      "community": 10,
-      "community_name": "ClientMixOptimizer.tsx",
+      "community": 1,
+      "community_name": "formatCurrency",
       "norm_label": "calculatemixmetrics()"
     },
     {
@@ -2813,8 +2813,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_business_logic_mixengine_evaluateskuclassification",
-      "community": 10,
-      "community_name": "ClientMixOptimizer.tsx",
+      "community": 1,
+      "community_name": "formatCurrency",
       "norm_label": "evaluateskuclassification()"
     },
     {
@@ -2825,8 +2825,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_business_logic_mixengine_suggestoperationaldecision",
-      "community": 10,
-      "community_name": "ClientMixOptimizer.tsx",
+      "community": 1,
+      "community_name": "formatCurrency",
       "norm_label": "suggestoperationaldecision()"
     },
     {
@@ -3171,10 +3171,23 @@
       "norm_label": "melicatalogproduct"
     },
     {
-      "label": "MeliInspectedItem",
+      "label": "MeliCompetitorOffer",
       "file_type": "code",
       "source_file": "src/lib/mercadolibre.ts",
       "source_location": "L409",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_lib_mercadolibre_melicompetitoroffer",
+      "community": 9,
+      "community_name": "mercadolibre.ts",
+      "norm_label": "melicompetitoroffer"
+    },
+    {
+      "label": "MeliInspectedItem",
+      "file_type": "code",
+      "source_file": "src/lib/mercadolibre.ts",
+      "source_location": "L424",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
@@ -3187,7 +3200,7 @@
       "label": "getMeliCategories()",
       "file_type": "code",
       "source_file": "src/lib/mercadolibre.ts",
-      "source_location": "L439",
+      "source_location": "L460",
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_mercadolibre_getmelicategories",
@@ -3199,7 +3212,7 @@
       "label": "getMeliCategoryDetail()",
       "file_type": "code",
       "source_file": "src/lib/mercadolibre.ts",
-      "source_location": "L458",
+      "source_location": "L479",
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_mercadolibre_getmelicategorydetail",
@@ -3211,7 +3224,7 @@
       "label": "getMeliTrends()",
       "file_type": "code",
       "source_file": "src/lib/mercadolibre.ts",
-      "source_location": "L476",
+      "source_location": "L497",
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_mercadolibre_getmelitrends",
@@ -3223,7 +3236,7 @@
       "label": "searchCatalogProducts()",
       "file_type": "code",
       "source_file": "src/lib/mercadolibre.ts",
-      "source_location": "L499",
+      "source_location": "L520",
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_mercadolibre_searchcatalogproducts",
@@ -3235,7 +3248,7 @@
       "label": "inspectMeliItem()",
       "file_type": "code",
       "source_file": "src/lib/mercadolibre.ts",
-      "source_location": "L562",
+      "source_location": "L583",
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_mercadolibre_inspectmeliitem",
@@ -5415,7 +5428,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/(demo)/market-radar/ClientMarketRadar.tsx",
-      "source_location": "L82",
+      "source_location": "L100",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_app_demo_market_radar_clientmarketradar",
@@ -5448,7 +5461,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/(demo)/market-radar/ClientMarketRadar.tsx",
-      "source_location": "L65",
+      "source_location": "L83",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_app_demo_market_radar_clientmarketradar",
@@ -8042,7 +8055,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/mercadolibre.ts",
-      "source_location": "L439",
+      "source_location": "L460",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_lib_mercadolibre",
@@ -8053,7 +8066,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/mercadolibre.ts",
-      "source_location": "L458",
+      "source_location": "L479",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_lib_mercadolibre",
@@ -8075,7 +8088,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/mercadolibre.ts",
-      "source_location": "L476",
+      "source_location": "L497",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_lib_mercadolibre",
@@ -8097,7 +8110,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/mercadolibre.ts",
-      "source_location": "L562",
+      "source_location": "L583",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_lib_mercadolibre",
@@ -8141,6 +8154,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/mercadolibre.ts",
+      "source_location": "L409",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_lib_mercadolibre",
+      "target": "src_lib_mercadolibre_melicompetitoroffer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/mercadolibre.ts",
       "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
@@ -8152,7 +8176,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/mercadolibre.ts",
-      "source_location": "L409",
+      "source_location": "L424",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_lib_mercadolibre",
@@ -8218,7 +8242,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/mercadolibre.ts",
-      "source_location": "L499",
+      "source_location": "L520",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_lib_mercadolibre",
@@ -8289,7 +8313,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/mercadolibre.ts",
-      "source_location": "L440",
+      "source_location": "L461",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_lib_mercadolibre_getmelicategories",
@@ -8301,7 +8325,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/mercadolibre.ts",
-      "source_location": "L459",
+      "source_location": "L480",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_lib_mercadolibre_getmelicategorydetail",
@@ -8313,7 +8337,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/mercadolibre.ts",
-      "source_location": "L477",
+      "source_location": "L498",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_lib_mercadolibre_getmelitrends",
@@ -8325,7 +8349,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/mercadolibre.ts",
-      "source_location": "L563",
+      "source_location": "L584",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_lib_mercadolibre_inspectmeliitem",
@@ -8337,7 +8361,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/mercadolibre.ts",
-      "source_location": "L504",
+      "source_location": "L525",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_lib_mercadolibre_searchcatalogproducts",
@@ -8901,5 +8925,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "b242d82ff54aa692da8d70f186b5b7a446038117"
+  "built_at_commit": "f0dd0a4860bf00cd563343506b17e168f3765484"
 }

@@ -1,16 +1,16 @@
 # Graph Report - Arasy  (2026-10-27)
 
 ## Corpus Check
-- 70 files · ~43,788 words
+- 70 files · ~44,809 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 333 nodes · 432 edges · 37 communities (21 shown, 16 thin omitted)
+- 334 nodes · 433 edges · 36 communities (20 shown, 16 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b242d82f`
+- Built from commit: `f0dd0a48`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -25,7 +25,6 @@
 - Copiloto AI (Chat y Herramientas)
 - (demo)/layout.tsx
 - mercadolibre.ts
-- ClientMixOptimizer.tsx
 - Documentación y Changelog
 - auth.ts
 - ChannelDistributionChart.tsx
@@ -67,25 +66,25 @@
   CLAUDE.md → CHANGELOG.md
 - `Fase 2: Conexión de Datos Activa` --conceptually_related_to--> `Versión 0.3.0`  [INFERRED]
   CLAUDE.md → CHANGELOG.md
-- `ClientMixOptimizer()` --calls--> `formatCurrency()`  [EXTRACTED]
-  src/app/(demo)/mix-optimizer/ClientMixOptimizer.tsx → src/lib/utils.ts
-- `ClientMixOptimizer()` --calls--> `formatPercent`  [EXTRACTED]
-  src/app/(demo)/mix-optimizer/ClientMixOptimizer.tsx → src/lib/utils.ts
 - `PlanningPage()` --calls--> `formatCurrency()`  [EXTRACTED]
   src/app/(demo)/planning/page.tsx → src/lib/utils.ts
+- `GET()` --calls--> `getValidAccessToken()`  [EXTRACTED]
+  src/app/api/integrations/mercadolibre/status/route.ts → src/lib/mercadolibre.ts
+- `POST()` --calls--> `syncMercadoLibreCatalogAndSales()`  [EXTRACTED]
+  src/app/api/integrations/mercadolibre/sync/route.ts → src/lib/mercadolibre.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (37 total, 16 thin omitted)
+## Communities (36 total, 16 thin omitted)
 
 ### Community 0 - "db.ts"
 Cohesion: 0.09
-Nodes (7): GET(), PageProps, StockAnalysisPage(), SalesAnalytics, SalesHistoryItem, globalForPrisma, prisma
+Nodes (8): GET(), PageProps, StockAnalysisPage(), Financials, SalesAnalytics, SalesHistoryItem, globalForPrisma, prisma
 
 ### Community 1 - "formatCurrency"
-Cohesion: 0.14
-Nodes (14): ClientDecisionCenter(), ClientDecisionCenterProps, Message, ClientPlanningView(), ClientPlanningViewProps, PlanningItem, PageProps, PlanningPage() (+6 more)
+Cohesion: 0.10
+Nodes (20): ClientDecisionCenter(), ClientDecisionCenterProps, Message, ClientMixOptimizer(), ClientMixOptimizerProps, ExtendedSkuMixItem, PageProps, ClientPlanningView() (+12 more)
 
 ### Community 2 - "devDependencies"
 Cohesion: 0.09
@@ -117,11 +116,7 @@ Nodes (5): LiveDemoBanner(), Header(), NavItem, navItems, Sidebar()
 
 ### Community 9 - "mercadolibre.ts"
 Cohesion: 0.08
-Nodes (34): GET(), GET(), POST(), GET(), POST(), GET(), GET(), GET() (+26 more)
-
-### Community 10 - "ClientMixOptimizer.tsx"
-Cohesion: 0.22
-Nodes (7): ClientMixOptimizer(), ClientMixOptimizerProps, ExtendedSkuMixItem, PageProps, calculateMixMetrics(), MixCalculationResult, SkuMixItem
+Nodes (35): GET(), GET(), POST(), GET(), POST(), GET(), GET(), GET() (+27 more)
 
 ### Community 11 - "Documentación y Changelog"
 Cohesion: 0.29
@@ -152,24 +147,24 @@ Cohesion: 0.22
 Nodes (8): CatalogProduct, CategoryBasic, CategoryDetail, ClientMarketRadar(), InspectedItem, TrendItem, WatchlistItem, metadata
 
 ## Knowledge Gaps
-- **126 isolated node(s):** `eslintConfig`, `nextConfig`, `name`, `version`, `private` (+121 more)
+- **127 isolated node(s):** `eslintConfig`, `nextConfig`, `name`, `version`, `private` (+122 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `prisma` connect `db.ts` to `formatCurrency`, `dashboard/page.tsx`, `chat/route.ts`, `mercadolibre.ts`, `ClientMixOptimizer.tsx`?**
+- **Why does `prisma` connect `db.ts` to `mercadolibre.ts`, `dashboard/page.tsx`, `chat/route.ts`, `formatCurrency`?**
   _High betweenness centrality (0.074) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `dependencies` to `Copiloto AI (Chat y Herramientas)`?**
   _High betweenness centrality (0.020) - this node is a cross-community bridge._
 - **Why does `devDependencies` connect `devDependencies` to `Copiloto AI (Chat y Herramientas)`?**
   _High betweenness centrality (0.019) - this node is a cross-community bridge._
 - **What connects `eslintConfig`, `nextConfig`, `name` to the rest of the system?**
-  _126 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _127 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `db.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08534850640113797 - nodes in this community are weakly interconnected._
 - **Should `formatCurrency` be split into smaller, more focused modules?**
-  _Cohesion score 0.13538461538461538 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09747899159663866 - nodes in this community are weakly interconnected._
 - **Should `devDependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._

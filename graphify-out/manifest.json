@@ -340,13 +340,13 @@
     "semantic_hash": ""
   },
   "src/lib/mercadolibre.ts": {
-    "mtime": 1793124363.8309934,
-    "ast_hash": "e7944e947a3b8b2e3112fa8ac92fb8ea",
+    "mtime": 1793125107.6071658,
+    "ast_hash": "f1c3a48798193a650ad7d6b70b062b7c",
     "semantic_hash": ""
   },
   "src/app/(demo)/market-radar/ClientMarketRadar.tsx": {
-    "mtime": 1793124398.1067631,
-    "ast_hash": "2fd413038d3d64596198ccb01c414c82",
+    "mtime": 1793125215.1453896,
+    "ast_hash": "a44be280f0f68785cf24116b9f7f46d6",
     "semantic_hash": ""
   },
   "src/app/(demo)/market-radar/page.tsx": {
