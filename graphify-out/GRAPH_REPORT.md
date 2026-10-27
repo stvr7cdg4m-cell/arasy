@@ -1,16 +1,16 @@
-# Graph Report - Arasy  (2026-09-30)
+# Graph Report - Arasy  (2026-10-27)
 
 ## Corpus Check
-- 56 files · ~35,519 words
+- 62 files · ~38,239 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 271 nodes · 325 edges · 35 communities (19 shown, 16 thin omitted)
+- 298 nodes · 379 edges · 36 communities (20 shown, 16 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `bdd9a426`
+- Built from commit: `7d80bb0f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -24,6 +24,7 @@
 - chat/route.ts
 - Copiloto AI (Chat y Herramientas)
 - (demo)/layout.tsx
+- mercadolibre.ts
 - ClientMixOptimizer.tsx
 - Documentación y Changelog
 - auth.ts
@@ -49,16 +50,16 @@
 - middleware.ts
 
 ## God Nodes (most connected - your core abstractions)
-1. `compilerOptions` - 16 edges
-2. `prisma` - 14 edges
+1. `prisma` - 18 edges
+2. `compilerOptions` - 16 edges
 3. `formatCurrency()` - 11 edges
 4. `POST()` - 9 edges
 5. `Financials` - 8 edges
-6. `formatPercent` - 7 edges
-7. `include` - 7 edges
-8. `scripts` - 6 edges
-9. `ClientMixOptimizer()` - 5 edges
-10. `ClientStockAnalysis()` - 5 edges
+6. `syncMercadoLibreCatalogAndSales()` - 8 edges
+7. `formatPercent` - 7 edges
+8. `include` - 7 edges
+9. `scripts` - 6 edges
+10. `ClientMixOptimizer()` - 5 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Fase 1: Estabilización Técnica` --conceptually_related_to--> `Versión 0.3.0`  [INFERRED]
@@ -75,7 +76,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (35 total, 16 thin omitted)
+## Communities (36 total, 16 thin omitted)
 
 ### Community 0 - "db.ts"
 Cohesion: 0.11
@@ -113,6 +114,10 @@ Nodes (11): name, prisma, seed, private, scripts, build, dev, lint (+3 more)
 Cohesion: 0.27
 Nodes (5): LiveDemoBanner(), Header(), NavItem, navItems, Sidebar()
 
+### Community 9 - "mercadolibre.ts"
+Cohesion: 0.16
+Nodes (19): GET(), GET(), POST(), GET(), POST(), exchangeCodeForTokens(), fetchItemsDetails(), fetchSellerItems() (+11 more)
+
 ### Community 10 - "ClientMixOptimizer.tsx"
 Cohesion: 0.22
 Nodes (7): ClientMixOptimizer(), ClientMixOptimizerProps, ExtendedSkuMixItem, PageProps, calculateMixMetrics(), MixCalculationResult, SkuMixItem
@@ -134,31 +139,31 @@ Cohesion: 0.33
 Nodes (3): CustomTooltipProps, MonthlyDataItem, PerformanceChartProps
 
 ### Community 15 - "ClientIntegrations.tsx"
-Cohesion: 0.40
-Nodes (3): ClientIntegrations(), IntegrationState, LogEntry
+Cohesion: 0.33
+Nodes (4): ClientIntegrations(), IntegrationState, LogEntry, MeliAccountState
 
 ### Community 31 - "app/layout.tsx"
 Cohesion: 0.40
 Nodes (3): manrope, metadata, montserrat
 
 ## Knowledge Gaps
-- **113 isolated node(s):** `eslintConfig`, `nextConfig`, `name`, `version`, `private` (+108 more)
+- **118 isolated node(s):** `eslintConfig`, `nextConfig`, `name`, `version`, `private` (+113 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `prisma` connect `db.ts` to `formatCurrency`, `ClientMixOptimizer.tsx`, `dashboard/page.tsx`, `chat/route.ts`?**
-  _High betweenness centrality (0.043) - this node is a cross-community bridge._
+- **Why does `prisma` connect `db.ts` to `formatCurrency`, `dashboard/page.tsx`, `chat/route.ts`, `mercadolibre.ts`, `ClientMixOptimizer.tsx`?**
+  _High betweenness centrality (0.064) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `dependencies` to `Copiloto AI (Chat y Herramientas)`?**
-  _High betweenness centrality (0.030) - this node is a cross-community bridge._
+  _High betweenness centrality (0.025) - this node is a cross-community bridge._
 - **Why does `devDependencies` connect `devDependencies` to `Copiloto AI (Chat y Herramientas)`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
+  _High betweenness centrality (0.024) - this node is a cross-community bridge._
 - **What connects `eslintConfig`, `nextConfig`, `name` to the rest of the system?**
-  _113 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _118 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `db.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.11375661375661375 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.10574712643678161 - nodes in this community are weakly interconnected._
 - **Should `formatCurrency` be split into smaller, more focused modules?**
   _Cohesion score 0.13538461538461538 - nodes in this community are weakly interconnected._
 - **Should `devDependencies` be split into smaller, more focused modules?**

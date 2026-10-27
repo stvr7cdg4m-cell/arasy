@@ -88,3 +88,17 @@ model Mix {
   itemsJson      String   // JSON serializado con los overrides de cada SKU
   createdAt      DateTime @default(now())
 }
+
+model MercadoLibreAccount {
+  id           String   @id @default(uuid())
+  meliUserId   String   @unique
+  nickname     String?
+  email        String?
+  siteId       String?  @default("MLA")
+  accessToken  String
+  refreshToken String
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+

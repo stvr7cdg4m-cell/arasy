@@ -220,8 +220,8 @@
     "semantic_hash": ""
   },
   "src/app/(demo)/integrations/ClientIntegrations.tsx": {
-    "mtime": 1783349168.510508,
-    "ast_hash": "e4253f359c1d448279b0f99f4532fbd1",
+    "mtime": 1793120539.9814436,
+    "ast_hash": "7be9edf68e63fb27f6a964751cfff7b0",
     "semantic_hash": ""
   },
   "src/app/(demo)/integrations/page.tsx": {
@@ -312,6 +312,36 @@
   "src/components/landing/Navbar.tsx": {
     "mtime": 1790786532.208402,
     "ast_hash": "9a437ac97ad14ae329a5d4cb3bddcde1",
+    "semantic_hash": ""
+  },
+  "src/app/api/integrations/mercadolibre/auth/route.ts": {
+    "mtime": 1793120305.4376864,
+    "ast_hash": "8b545caf2f96d96179c5705596b77d58",
+    "semantic_hash": ""
+  },
+  "src/app/api/integrations/mercadolibre/callback/route.ts": {
+    "mtime": 1793120323.9616094,
+    "ast_hash": "21c9d9ed1bd47c691ab9116bcf32fe7b",
+    "semantic_hash": ""
+  },
+  "src/app/api/integrations/mercadolibre/disconnect/route.ts": {
+    "mtime": 1793120333.4624143,
+    "ast_hash": "d1c57a02342e46315596a430ee835f58",
+    "semantic_hash": ""
+  },
+  "src/app/api/integrations/mercadolibre/status/route.ts": {
+    "mtime": 1793120342.3560812,
+    "ast_hash": "f13246e4623e2d2d78977160aaa9bdb0",
+    "semantic_hash": ""
+  },
+  "src/app/api/integrations/mercadolibre/sync/route.ts": {
+    "mtime": 1793120351.806274,
+    "ast_hash": "041869350ebeebc58adda729cad10b1f",
+    "semantic_hash": ""
+  },
+  "src/lib/mercadolibre.ts": {
+    "mtime": 1793120374.842819,
+    "ast_hash": "18ec55c2a93dedf8206e77a0aaf926f6",
     "semantic_hash": ""
   }
 }
