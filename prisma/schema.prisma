@@ -102,3 +102,20 @@ model MercadoLibreAccount {
   updatedAt    DateTime @updatedAt
 }
 
+model CompetitorWatchItem {
+  id             String   @id @default(uuid())
+  itemId         String   @unique
+  title          String
+  price          Float
+  currencyId     String   @default("ARS")
+  soldQuantity   Int      @default(0)
+  stock          Int      @default(0)
+  permalink      String
+  thumbnail      String?
+  sellerId       String?
+  sellerNickname String?
+  categoryName   String?
+  notes          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

@@ -16,6 +16,7 @@ const navItems: NavItem[] = [
   { name: "Mix Optimizer", href: "/mix-optimizer", icon: "analytics" },
   { name: "Análisis de Stock", href: "/stock-analysis", icon: "inventory_2" },
   { name: "Decision Center AI", href: "/decision-center", icon: "psychology" },
+  { name: "Radar de Mercado", href: "/market-radar", icon: "trending_up" },
   { name: "Integraciones", href: "/integrations", icon: "sync" },
 ];
 

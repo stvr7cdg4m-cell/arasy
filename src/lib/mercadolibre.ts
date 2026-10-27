@@ -370,3 +370,290 @@ export async function syncMercadoLibreCatalogAndSales() {
     timestamp: new Date().toISOString(),
   };
 }
+
+export interface MeliCategoryBasic {
+  id: string;
+  name: string;
+}
+
+export interface MeliCategoryDetail extends MeliCategoryBasic {
+  picture?: string;
+  total_items_in_this_category?: number;
+  children_categories?: Array<{
+    id: string;
+    name: string;
+    total_items_in_this_category?: number;
+  }>;
+  path_from_root?: Array<{
+    id: string;
+    name: string;
+  }>;
+}
+
+export interface MeliTrend {
+  keyword: string;
+  url: string;
+}
+
+export interface MeliCatalogProduct {
+  id: string;
+  name: string;
+  domain_id?: string;
+  permalink?: string;
+  status?: string;
+  pictures?: Array<{ id: string; url: string }>;
+  attributes?: Array<{ id: string; name: string; value_name: string }>;
+  rating?: number;
+}
+
+export interface MeliInspectedItem {
+  id: string;
+  title: string;
+  price: number;
+  original_price?: number;
+  currency_id: string;
+  sold_quantity: number;
+  available_quantity: number;
+  estimated_revenue: number;
+  permalink: string;
+  thumbnail: string;
+  condition: string;
+  listing_type_id: string;
+  category_id: string;
+  category_name?: string;
+  warranty?: string;
+  free_shipping?: boolean;
+  seller: {
+    id: number | string;
+    nickname: string;
+    reputation_level?: string;
+    power_seller_status?: string | null;
+  };
+  pictures: string[];
+  attributes: Array<{ name: string; value: string }>;
+}
+
+/**
+ * Obtiene las categorías principales del sitio MLA
+ */
+export async function getMeliCategories(): Promise<MeliCategoryBasic[]> {
+  const tokenData = await getValidAccessToken();
+  const headers: Record<string, string> = { "User-Agent": "Arasy/1.0" };
+  if (tokenData?.accessToken) {
+    headers["Authorization"] = `Bearer ${tokenData.accessToken}`;
+  }
+
+  const res = await fetch("https://api.mercadolibre.com/sites/MLA/categories", { headers });
+  if (!res.ok) {
+    throw new Error(`Error ${res.status} al consultar categorías de Mercado Libre.`);
+  }
+
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
+}
+
+/**
+ * Obtiene el detalle, subcategorías y volumen de una categoría
+ */
+export async function getMeliCategoryDetail(categoryId: string): Promise<MeliCategoryDetail> {
+  const tokenData = await getValidAccessToken();
+  const headers: Record<string, string> = { "User-Agent": "Arasy/1.0" };
+  if (tokenData?.accessToken) {
+    headers["Authorization"] = `Bearer ${tokenData.accessToken}`;
+  }
+
+  const res = await fetch(`https://api.mercadolibre.com/categories/${categoryId}`, { headers });
+  if (!res.ok) {
+    throw new Error(`Error ${res.status} al consultar la categoría ${categoryId}.`);
+  }
+
+  return await res.json();
+}
+
+/**
+ * Obtiene el ranking de las 50 tendencias oficiales (términos más buscados y demandados)
+ */
+export async function getMeliTrends(categoryId?: string): Promise<MeliTrend[]> {
+  const tokenData = await getValidAccessToken();
+  const headers: Record<string, string> = { "User-Agent": "Arasy/1.0" };
+  if (tokenData?.accessToken) {
+    headers["Authorization"] = `Bearer ${tokenData.accessToken}`;
+  }
+
+  const url = categoryId
+    ? `https://api.mercadolibre.com/trends/MLA/${categoryId}`
+    : "https://api.mercadolibre.com/trends/MLA";
+
+  const res = await fetch(url, { headers });
+  if (!res.ok) {
+    throw new Error(`Error ${res.status} al consultar tendencias en Mercado Libre.`);
+  }
+
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
+}
+
+/**
+ * Búsqueda de productos normalizados dentro del catálogo único de Mercado Libre
+ */
+export async function searchCatalogProducts(
+  query: string,
+  categoryId?: string,
+  limit = 20
+): Promise<{ total: number; results: MeliCatalogProduct[] }> {
+  const tokenData = await getValidAccessToken();
+  const headers: Record<string, string> = { "User-Agent": "Arasy/1.0" };
+  if (tokenData?.accessToken) {
+    headers["Authorization"] = `Bearer ${tokenData.accessToken}`;
+  }
+
+  let url = `https://api.mercadolibre.com/products/search?site_id=MLA&status=active&q=${encodeURIComponent(query)}&limit=${limit}`;
+  if (categoryId) {
+    url += `&category_id=${categoryId}`;
+  }
+
+  const res = await fetch(url, { headers });
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(
+      (errorData as { message?: string })?.message ||
+        `Error ${res.status} al buscar productos en el catálogo de Mercado Libre.`
+    );
+  }
+
+  const data = (await res.json()) as {
+    paging?: { total?: number };
+    results?: Array<{
+      id: string;
+      name: string;
+      domain_id?: string;
+      permalink?: string;
+      status?: string;
+      pictures?: Array<{ id: string; url: string }>;
+      attributes?: Array<{ id: string; name: string; value_name?: string }>;
+      rating?: number;
+    }>;
+  };
+
+  const results: MeliCatalogProduct[] = (data.results || []).map((p) => ({
+    id: p.id,
+    name: p.name,
+    domain_id: p.domain_id,
+    permalink: p.permalink,
+    status: p.status,
+    pictures: p.pictures,
+    rating: p.rating,
+    attributes: (p.attributes || []).map((a) => ({
+      id: a.id,
+      name: a.name,
+      value_name: a.value_name || "",
+    })),
+  }));
+
+  return {
+    total: data.paging?.total || results.length,
+    results,
+  };
+}
+
+/**
+ * Inspecciona un artículo de la competencia mediante su ID o URL de Mercado Libre
+ */
+export async function inspectMeliItem(input: string): Promise<MeliInspectedItem> {
+  const tokenData = await getValidAccessToken();
+  const headers: Record<string, string> = { "User-Agent": "Arasy/1.0" };
+  if (tokenData?.accessToken) {
+    headers["Authorization"] = `Bearer ${tokenData.accessToken}`;
+  }
+
+  // Extraer el ID de MLA (ej: MLA-12345678 o MLA12345678)
+  const match = input.match(/MLA-?(\d+)/i);
+  if (!match) {
+    throw new Error("No se pudo detectar un identificador válido de Mercado Libre (ej: MLA123456789 o link del artículo).");
+  }
+
+  const cleanId = `MLA${match[1]}`;
+
+  // 1. Obtener publicación
+  const itemRes = await fetch(`https://api.mercadolibre.com/items/${cleanId}`, { headers });
+  if (!itemRes.ok) {
+    throw new Error(`Error ${itemRes.status} al consultar el artículo ${cleanId}. Verificá que exista y esté activo.`);
+  }
+
+  const item = await itemRes.json();
+
+  // 2. Obtener vendedor
+  let sellerNickname = "Desconocido";
+  let reputationLevel = "Desconocido";
+  let powerSellerStatus: string | null = null;
+
+  if (item.seller_id) {
+    try {
+      const sellerRes = await fetch(`https://api.mercadolibre.com/users/${item.seller_id}`, { headers });
+      if (sellerRes.ok) {
+        const sellerData = await sellerRes.json();
+        sellerNickname = sellerData.nickname || sellerNickname;
+        reputationLevel = sellerData.seller_reputation?.level_id || reputationLevel;
+        powerSellerStatus = sellerData.seller_reputation?.power_seller_status || null;
+      }
+    } catch {
+      // Ignorar fallo secundario de vendedor
+    }
+  }
+
+  // 3. Obtener nombre de categoría
+  let categoryName = item.category_id;
+  if (item.category_id) {
+    try {
+      const catRes = await fetch(`https://api.mercadolibre.com/categories/${item.category_id}`, { headers });
+      if (catRes.ok) {
+        const catData = await catRes.json();
+        categoryName = catData.name || categoryName;
+      }
+    } catch {
+      // Ignorar fallo de categoría
+    }
+  }
+
+  const price = Number(item.price) || 0;
+  const soldQuantity = Number(item.sold_quantity) || 0;
+  const estimatedRevenue = price * soldQuantity;
+
+  const pictures: string[] = Array.isArray(item.pictures)
+    ? item.pictures.map((p: { url?: string; secure_url?: string }) => p.secure_url || p.url || "")
+    : [];
+
+  const attributes = Array.isArray(item.attributes)
+    ? item.attributes.slice(0, 8).map((a: { name?: string; value_name?: string }) => ({
+        name: a.name || "",
+        value: a.value_name || "",
+      }))
+    : [];
+
+  return {
+    id: cleanId,
+    title: item.title || "Sin título",
+    price,
+    original_price: item.original_price ? Number(item.original_price) : price,
+    currency_id: item.currency_id || "ARS",
+    sold_quantity: soldQuantity,
+    available_quantity: Number(item.available_quantity) || 0,
+    estimated_revenue: estimatedRevenue,
+    permalink: item.permalink || `https://articulo.mercadolibre.com.ar/${cleanId}`,
+    thumbnail: item.secure_thumbnail || item.thumbnail || pictures[0] || "",
+    condition: item.condition === "new" ? "Nuevo" : item.condition === "used" ? "Usado" : item.condition,
+    listing_type_id: item.listing_type_id || "gold_special",
+    category_id: item.category_id || "",
+    category_name: categoryName,
+    warranty: item.warranty || "Sin garantía declarada",
+    free_shipping: item.shipping?.free_shipping || false,
+    seller: {
+      id: item.seller_id,
+      nickname: sellerNickname,
+      reputation_level: reputationLevel,
+      power_seller_status: powerSellerStatus,
+    },
+    pictures,
+    attributes,
+  };
+}

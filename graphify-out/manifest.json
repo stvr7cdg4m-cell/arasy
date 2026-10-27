@@ -75,8 +75,8 @@
     "semantic_hash": ""
   },
   "src/components/layout/Sidebar.tsx": {
-    "mtime": 1786027955.974619,
-    "ast_hash": "9895c83f8a2a9fc51b54aa335338e4a5",
+    "mtime": 1793123407.7688553,
+    "ast_hash": "dde9597425cf94f082423a04b28b4e4b",
     "semantic_hash": ""
   },
   "src/lib/business-logic/financials.ts": {
@@ -340,8 +340,48 @@
     "semantic_hash": ""
   },
   "src/lib/mercadolibre.ts": {
-    "mtime": 1793120374.842819,
-    "ast_hash": "18ec55c2a93dedf8206e77a0aaf926f6",
+    "mtime": 1793123342.5790415,
+    "ast_hash": "85659ff71e7904914ec026872caf4d2a",
+    "semantic_hash": ""
+  },
+  "src/app/(demo)/market-radar/ClientMarketRadar.tsx": {
+    "mtime": 1793123632.9042635,
+    "ast_hash": "f578fcf5a99e7cfd52ad2c3151ca6767",
+    "semantic_hash": ""
+  },
+  "src/app/(demo)/market-radar/page.tsx": {
+    "mtime": 1793123504.8274734,
+    "ast_hash": "144d2ae66f1a043b42b7563eb0d7a17c",
+    "semantic_hash": ""
+  },
+  "src/app/api/market/catalog/route.ts": {
+    "mtime": 1793123376.0393305,
+    "ast_hash": "45755f37ab22df0863dd54bbd5d82097",
+    "semantic_hash": ""
+  },
+  "src/app/api/market/categories/route.ts": {
+    "mtime": 1793123352.0980487,
+    "ast_hash": "81c5c42714da7ff75ee92e289c5b27fa",
+    "semantic_hash": ""
+  },
+  "src/app/api/market/category/route.ts": {
+    "mtime": 1793123359.368264,
+    "ast_hash": "97832063013520559480d4d96d83d1d4",
+    "semantic_hash": ""
+  },
+  "src/app/api/market/inspect/route.ts": {
+    "mtime": 1793123383.8579597,
+    "ast_hash": "15b319a022c638dbcd489ff10799a360",
+    "semantic_hash": ""
+  },
+  "src/app/api/market/trends/route.ts": {
+    "mtime": 1793123367.2605593,
+    "ast_hash": "281b053ac59442914c7be024778d6819",
+    "semantic_hash": ""
+  },
+  "src/app/api/market/watchlist/route.ts": {
+    "mtime": 1793123395.1252358,
+    "ast_hash": "bf43db3e876fdb11898ef0e7261fb6e7",
     "semantic_hash": ""
   }
 }

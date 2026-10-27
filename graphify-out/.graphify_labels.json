@@ -34,5 +34,6 @@
   "32": "ChannelSyncStatus.tsx",
   "33": "middleware.ts",
   "34": "contact/route.ts",
-  "35": "login/page.tsx"
+  "35": "login/page.tsx",
+  "36": "ClientMarketRadar.tsx"
 }
