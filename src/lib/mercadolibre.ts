@@ -7,12 +7,15 @@ export interface MeliConfig {
 }
 
 export function getMeliConfig(): MeliConfig {
-  const clientId = process.env.MERCADOLIBRE_CLIENT_ID || process.env.APP_ID || "";
-  const clientSecret = process.env.MERCADOLIBRE_CLIENT_SECRET || process.env.SECRET_KEY || "";
-  const redirectUri = process.env.MERCADOLIBRE_REDIRECT_URI || "https://arasy.app/api/integrations/mercadolibre/callback";
+  const clientId = (process.env.MERCADOLIBRE_CLIENT_ID || process.env.APP_ID || "").replace(/[\r\n\t]/g, "").trim();
+  const clientSecret = (process.env.MERCADOLIBRE_CLIENT_SECRET || process.env.SECRET_KEY || "").replace(/[\r\n\t]/g, "").trim();
+  const redirectUri = (process.env.MERCADOLIBRE_REDIRECT_URI || "https://arasy.app/api/integrations/mercadolibre/callback")
+    .replace(/[\r\n\t]/g, "")
+    .trim();
 
   return { clientId, clientSecret, redirectUri };
 }
+
 
 /**
  * Genera la URL de autorización para el flujo OAuth 2.0 (Authorization Code)
