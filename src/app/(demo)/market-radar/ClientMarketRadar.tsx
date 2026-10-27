@@ -121,10 +121,16 @@ export default function ClientMarketRadar() {
   const [catalogLoading, setCatalogLoading] = useState<boolean>(false);
 
   // State: Inspector
-  const [inspectQuery, setInspectQuery] = useState<string>("");
+  const [inspectQuery, setInspectQuery] = useState<string>("MLA59925307");
   const [inspectedItem, setInspectedItem] = useState<InspectedItem | null>(null);
+  const [activePicture, setActivePicture] = useState<string | null>(null);
   const [inspectLoading, setInspectLoading] = useState<boolean>(false);
   const [inspectError, setInspectError] = useState<string | null>(null);
+
+  const formatImgUrl = (url?: string | null) => {
+    if (!url) return "";
+    return url.replace(/^http:\/\//i, "https://");
+  };
 
   // State: Watchlist
   const [watchlist, setWatchlist] = useState<WatchlistItem[]>([]);
@@ -244,6 +250,7 @@ export default function ClientMarketRadar() {
       const data = await res.json();
       if (res.ok && data.success) {
         setInspectedItem(data.item);
+        setActivePicture(data.item?.thumbnail || data.item?.pictures?.[0] || null);
         if (queryToInspect) setInspectQuery(queryToInspect);
       } else {
         setInspectError(data.error || "No se pudo inspeccionar el artículo.");
@@ -731,9 +738,10 @@ export default function ClientMarketRadar() {
                         <div className="h-44 w-full bg-slate-50 rounded-xl overflow-hidden flex items-center justify-center p-2 relative">
                           {image ? (
                             <Image
-                              src={image}
+                              src={formatImgUrl(image)}
                               alt={product.name}
                               fill
+                              unoptimized
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               className="object-contain p-2"
                             />
@@ -936,11 +944,12 @@ export default function ClientMarketRadar() {
                 {/* Photo & Condition */}
                 <div className="lg:col-span-4 space-y-3">
                   <div className="h-64 w-full bg-slate-50 rounded-2xl overflow-hidden flex items-center justify-center p-3 border border-slate-100 relative">
-                    {inspectedItem.thumbnail ? (
+                    {(activePicture || inspectedItem.thumbnail) ? (
                       <Image
-                        src={inspectedItem.thumbnail}
+                        src={formatImgUrl(activePicture || inspectedItem.thumbnail)}
                         alt={inspectedItem.title}
                         fill
+                        unoptimized
                         sizes="(max-width: 1024px) 100vw, 33vw"
                         className="object-contain p-2"
                       />
@@ -956,20 +965,28 @@ export default function ClientMarketRadar() {
 
                   {inspectedItem.pictures && inspectedItem.pictures.length > 1 && (
                     <div className="flex gap-2 overflow-x-auto pb-1">
-                      {inspectedItem.pictures.slice(0, 5).map((pic, idx) => (
-                        <div
-                          key={idx}
-                          className="w-14 h-14 relative flex-shrink-0 rounded-lg border border-slate-200 overflow-hidden bg-slate-50"
-                        >
-                          <Image
-                            src={pic}
-                            alt=""
-                            fill
-                            sizes="56px"
-                            className="object-cover"
-                          />
-                        </div>
-                      ))}
+                      {inspectedItem.pictures.slice(0, 6).map((pic, idx) => {
+                        const isCurrent = (activePicture || inspectedItem.thumbnail) === pic;
+                        return (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={() => setActivePicture(pic)}
+                            className={`w-14 h-14 relative flex-shrink-0 rounded-lg border-2 overflow-hidden bg-slate-50 transition cursor-pointer ${
+                              isCurrent ? "border-amber-500 shadow-sm" : "border-slate-200 hover:border-slate-400"
+                            }`}
+                          >
+                            <Image
+                              src={formatImgUrl(pic)}
+                              alt=""
+                              fill
+                              unoptimized
+                              sizes="56px"
+                              className="object-cover"
+                            />
+                          </button>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
@@ -1252,9 +1269,10 @@ export default function ClientMarketRadar() {
                             {item.thumbnail ? (
                               <div className="w-12 h-12 relative flex-shrink-0 rounded-lg border border-slate-200 overflow-hidden bg-slate-50">
                                 <Image
-                                  src={item.thumbnail}
+                                  src={formatImgUrl(item.thumbnail)}
                                   alt=""
                                   fill
+                                  unoptimized
                                   sizes="48px"
                                   className="object-cover"
                                 />
