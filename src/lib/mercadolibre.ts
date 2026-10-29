@@ -420,6 +420,7 @@ export interface MeliCatalogProduct {
 
 export interface MeliCompetitorOffer {
   itemId: string;
+  permalink?: string;
   sellerId: number | string;
   sellerNickname: string;
   sellerReputation?: string;
@@ -752,8 +753,13 @@ export async function inspectMeliItem(input: string): Promise<MeliInspectedItem>
                 }
               }
 
+              const rawItemId = off.item_id || "";
+              const formattedItemId = rawItemId.replace(/^([a-zA-Z]{3})-?(\d+)$/, "$1-$2");
+              const competitorPermalink = formattedItemId ? `https://articulo.mercadolibre.com.ar/${formattedItemId}` : "";
+
               competitors.push({
-                itemId: off.item_id || "",
+                itemId: formattedItemId || rawItemId,
+                permalink: competitorPermalink,
                 sellerId: off.seller_id || 0,
                 sellerNickname: nickname,
                 sellerReputation: repLevel,
@@ -886,7 +892,7 @@ export async function inspectMeliItem(input: string): Promise<MeliInspectedItem>
     sold_quantity: soldQuantity,
     available_quantity: Number(item.available_quantity) || 0,
     estimated_revenue: estimatedRevenue,
-    permalink: item.permalink || `https://articulo.mercadolibre.com.ar/${cleanId}`,
+    permalink: item.permalink || `https://articulo.mercadolibre.com.ar/${cleanId.replace(/^([a-zA-Z]{3})-?(\d+)$/, "$1-$2")}`,
     thumbnail: item.secure_thumbnail || item.thumbnail || pictures[0] || "",
     condition: item.condition === "new" ? "Nuevo" : item.condition === "used" ? "Usado" : item.condition,
     status: item.status || "active",

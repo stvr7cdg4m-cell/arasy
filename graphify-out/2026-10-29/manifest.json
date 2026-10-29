@@ -340,13 +340,13 @@
     "semantic_hash": ""
   },
   "src/lib/mercadolibre.ts": {
-    "mtime": 1793125107.6071658,
-    "ast_hash": "f1c3a48798193a650ad7d6b70b062b7c",
+    "mtime": 1793280367.7379606,
+    "ast_hash": "6bcbb3f881fd9b222593fdc5380bf8d7",
     "semantic_hash": ""
   },
   "src/app/(demo)/market-radar/ClientMarketRadar.tsx": {
-    "mtime": 1793130334.0375624,
-    "ast_hash": "412cf50c12b5719dd040dcf9d077b80f",
+    "mtime": 1793281854.4801123,
+    "ast_hash": "bac0f7994b32ee4751d3c68d59e61497",
     "semantic_hash": ""
   },
   "src/app/(demo)/market-radar/page.tsx": {
@@ -355,8 +355,8 @@
     "semantic_hash": ""
   },
   "src/app/api/market/catalog/route.ts": {
-    "mtime": 1793123376.0393305,
-    "ast_hash": "45755f37ab22df0863dd54bbd5d82097",
+    "mtime": 1793280381.6047993,
+    "ast_hash": "63ff8a7c8e4c61a01f531dbfffd0d4f1",
     "semantic_hash": ""
   },
   "src/app/api/market/categories/route.ts": {

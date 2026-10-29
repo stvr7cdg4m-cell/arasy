@@ -80,6 +80,7 @@ interface InspectedItem {
   max_competitor_price?: number;
   competitors?: Array<{
     itemId: string;
+    permalink?: string;
     sellerId: number | string;
     sellerNickname: string;
     sellerReputation?: string;
@@ -1413,15 +1414,35 @@ export default function ClientMarketRadar() {
                                   {comp.city}
                                 </td>
                                 <td className="py-2.5 px-3 text-right">
-                                  <a
-                                    href={`https://articulo.mercadolibre.com.ar/${comp.itemId}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-amber-600 hover:text-amber-800 font-semibold inline-flex items-center gap-0.5"
-                                  >
-                                    <span>Ver</span>
-                                    <span className="material-symbols-outlined text-xs">open_in_new</span>
-                                  </a>
+                                  <div className="inline-flex items-center gap-2 justify-end">
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        const targetId = comp.itemId.replace(/-/g, "");
+                                        setInspectQuery(targetId);
+                                        handleInspect(targetId);
+                                      }}
+                                      className="text-[11px] text-slate-500 hover:text-midnight font-medium inline-flex items-center gap-0.5 hover:underline"
+                                      title="Espiar esta publicación individual en Arasy"
+                                    >
+                                      <span className="material-symbols-outlined text-xs">troubleshoot</span>
+                                      <span>Espiar</span>
+                                    </button>
+                                    <a
+                                      href={
+                                        comp.permalink ||
+                                        (comp.itemId
+                                          ? `https://articulo.mercadolibre.com.ar/${comp.itemId.replace(/^([a-zA-Z]{3})-?(\d+)$/, "$1-$2")}`
+                                          : "#")
+                                      }
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-amber-600 hover:text-amber-800 font-bold inline-flex items-center gap-0.5 hover:underline text-xs"
+                                    >
+                                      <span>Ver</span>
+                                      <span className="material-symbols-outlined text-xs">open_in_new</span>
+                                    </a>
+                                  </div>
                                 </td>
                               </tr>
                             ))}
