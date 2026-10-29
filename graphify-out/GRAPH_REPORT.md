@@ -1,7 +1,7 @@
-# Graph Report - Arasy  (2026-10-27)
+# Graph Report - Arasy  (2026-10-29)
 
 ## Corpus Check
-- 70 files · ~44,809 words
+- 70 files · ~45,669 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f0dd0a48`
+- Built from commit: `b85e56f5`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 

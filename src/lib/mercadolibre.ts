@@ -404,6 +404,18 @@ export interface MeliCatalogProduct {
   pictures?: Array<{ id: string; url: string }>;
   attributes?: Array<{ id: string; name: string; value_name: string }>;
   rating?: number;
+  price?: number;
+  min_price?: number;
+  max_price?: number;
+  currency_id?: string;
+  total_offers?: number;
+  has_active_offers?: boolean;
+  free_shipping?: boolean;
+  buy_box_winner?: {
+    seller_id?: number | string;
+    price?: number;
+    free_shipping?: boolean;
+  };
 }
 
 export interface MeliCompetitorOffer {
@@ -433,6 +445,8 @@ export interface MeliInspectedItem {
   permalink: string;
   thumbnail: string;
   condition: string;
+  status?: string;
+  has_active_offers?: boolean;
   listing_type_id: string;
   category_id: string;
   category_name?: string;
@@ -515,12 +529,14 @@ export async function getMeliTrends(categoryId?: string): Promise<MeliTrend[]> {
 }
 
 /**
- * Búsqueda de productos normalizados dentro del catálogo único de Mercado Libre
+ * Búsqueda de productos normalizados dentro del catálogo único de Mercado Libre,
+ * con enriquecimiento concurrente de ofertas y precios reales de competidores activos.
  */
 export async function searchCatalogProducts(
   query: string,
   categoryId?: string,
-  limit = 20
+  limit = 20,
+  onlyActive = true
 ): Promise<{ total: number; results: MeliCatalogProduct[] }> {
   const tokenData = await getValidAccessToken();
   const headers: Record<string, string> = { "User-Agent": "Arasy/1.0" };
@@ -528,7 +544,10 @@ export async function searchCatalogProducts(
     headers["Authorization"] = `Bearer ${tokenData.accessToken}`;
   }
 
-  let url = `https://api.mercadolibre.com/products/search?site_id=MLA&status=active&q=${encodeURIComponent(query)}&limit=${limit}`;
+  // Si onlyActive está activado, buscamos un lote mayor en la API para poder filtrar y tener suficientes con stock
+  const fetchLimit = onlyActive ? Math.min(Math.max(limit * 2, 24), 50) : limit;
+
+  let url = `https://api.mercadolibre.com/products/search?site_id=MLA&status=active&q=${encodeURIComponent(query)}&limit=${fetchLimit}`;
   if (categoryId) {
     url += `&category_id=${categoryId}`;
   }
@@ -556,24 +575,91 @@ export async function searchCatalogProducts(
     }>;
   };
 
-  const results: MeliCatalogProduct[] = (data.results || []).map((p) => ({
-    id: p.id,
-    name: p.name,
-    domain_id: p.domain_id,
-    permalink: p.permalink,
-    status: p.status,
-    pictures: p.pictures,
-    rating: p.rating,
-    attributes: (p.attributes || []).map((a) => ({
-      id: a.id,
-      name: a.name,
-      value_name: a.value_name || "",
-    })),
-  }));
+  const rawResults = data.results || [];
+
+  // Enriquecer concurrentemente con ofertas activas (/products/{id}/items)
+  const enrichedResults = await Promise.all(
+    rawResults.map(async (p) => {
+      let hasActiveOffers = false;
+      let minPrice: number | undefined;
+      let maxPrice: number | undefined;
+      let totalOffers = 0;
+      let freeShipping = false;
+      let buyBoxWinner: { seller_id?: number | string; price?: number; free_shipping?: boolean } | undefined;
+
+      try {
+        const compRes = await fetch(`https://api.mercadolibre.com/products/${p.id}/items`, { headers });
+        if (compRes.ok) {
+          const compData = await compRes.json();
+          const offers = (compData.results || []) as Array<{
+            item_id?: string;
+            seller_id?: number | string;
+            price?: number;
+            shipping?: { free_shipping?: boolean };
+          }>;
+
+          if (offers.length > 0) {
+            hasActiveOffers = true;
+            totalOffers = compData.paging?.total || offers.length;
+            const validPrices = offers.map((o) => Number(o.price) || 0).filter((pr) => pr > 0);
+            if (validPrices.length > 0) {
+              minPrice = Math.min(...validPrices);
+              maxPrice = Math.max(...validPrices);
+            }
+            const winner = offers[0];
+            freeShipping = !!winner?.shipping?.free_shipping;
+            buyBoxWinner = {
+              seller_id: winner?.seller_id,
+              price: Number(winner?.price) || minPrice,
+              free_shipping: freeShipping,
+            };
+          }
+        }
+      } catch {
+        // En caso de fallo de red en un item, se marca sin ofertas activas
+      }
+
+      const item: MeliCatalogProduct = {
+        id: p.id,
+        name: p.name,
+        domain_id: p.domain_id,
+        permalink: p.permalink,
+        status: p.status,
+        pictures: p.pictures,
+        rating: p.rating,
+        price: minPrice,
+        min_price: minPrice,
+        max_price: maxPrice,
+        currency_id: "ARS",
+        total_offers: totalOffers,
+        has_active_offers: hasActiveOffers,
+        free_shipping: freeShipping,
+        buy_box_winner: buyBoxWinner,
+        attributes: (p.attributes || []).map((a) => ({
+          id: a.id,
+          name: a.name,
+          value_name: a.value_name || "",
+        })),
+      };
+
+      return item;
+    })
+  );
+
+  let finalResults = enrichedResults;
+
+  if (onlyActive) {
+    finalResults = enrichedResults.filter((p) => p.has_active_offers);
+  } else {
+    // Si no es onlyActive, ordenar primero los que tienen ofertas activas
+    finalResults.sort((a, b) => (b.has_active_offers ? 1 : 0) - (a.has_active_offers ? 1 : 0));
+  }
+
+  const slicedResults = finalResults.slice(0, limit);
 
   return {
-    total: data.paging?.total || results.length,
-    results,
+    total: onlyActive ? finalResults.length : data.paging?.total || finalResults.length,
+    results: slicedResults,
   };
 }
 
@@ -687,6 +773,7 @@ export async function inspectMeliItem(input: string): Promise<MeliInspectedItem>
         }
 
         const bestSeller = competitors[0];
+        const hasActiveOffers = competitors.length > 0;
 
         return {
           id: cleanId,
@@ -699,15 +786,17 @@ export async function inspectMeliItem(input: string): Promise<MeliInspectedItem>
           estimated_revenue: (minCompetitorPrice || 0) * (bestSeller?.sellerTransactions || 0),
           permalink: prod.permalink || `https://www.mercadolibre.com.ar/p/${cleanId}`,
           thumbnail: pictures[0] || "",
-          condition: "Ficha Oficial de Catálogo",
+          condition: hasActiveOffers ? "Ficha Oficial de Catálogo" : "Ficha de Catálogo (Sin stock activo)",
+          status: hasActiveOffers ? "active" : "without_stock",
+          has_active_offers: hasActiveOffers,
           listing_type_id: "catalog_product",
           category_id: prod.domain_id || "",
           category_name: `Catálogo Oficial (${prod.domain_id || "MLA"})`,
-          warranty: bestSeller?.warranty || "Garantía según vendedor de Buy Box",
-          free_shipping: bestSeller?.freeShipping ?? true,
+          warranty: bestSeller?.warranty || (hasActiveOffers ? "Garantía según vendedor de Buy Box" : "Sin vendedores activos en este momento"),
+          free_shipping: bestSeller?.freeShipping ?? false,
           seller: {
             id: bestSeller?.sellerId || "CATALOG",
-            nickname: bestSeller ? `${bestSeller.sellerNickname} (Buy Box Winner)` : "Catálogo Mercado Libre",
+            nickname: bestSeller ? `${bestSeller.sellerNickname} (Buy Box Winner)` : "Catálogo Mercado Libre (Sin oferta activa)",
             reputation_level: bestSeller?.sellerReputation || "5_green",
             power_seller_status: bestSeller?.powerSellerStatus || "platinum",
             total_sales: bestSeller?.sellerTransactions || 0,
@@ -800,6 +889,8 @@ export async function inspectMeliItem(input: string): Promise<MeliInspectedItem>
     permalink: item.permalink || `https://articulo.mercadolibre.com.ar/${cleanId}`,
     thumbnail: item.secure_thumbnail || item.thumbnail || pictures[0] || "",
     condition: item.condition === "new" ? "Nuevo" : item.condition === "used" ? "Usado" : item.condition,
+    status: item.status || "active",
+    has_active_offers: (item.status || "active") === "active",
     listing_type_id: item.listing_type_id || "gold_special",
     category_id: item.category_id || "",
     category_name: categoryName,

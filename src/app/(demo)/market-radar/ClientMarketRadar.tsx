@@ -33,6 +33,18 @@ interface CatalogProduct {
   pictures?: Array<{ id: string; url: string }>;
   attributes?: Array<{ id: string; name: string; value_name: string }>;
   rating?: number;
+  price?: number;
+  min_price?: number;
+  max_price?: number;
+  currency_id?: string;
+  total_offers?: number;
+  has_active_offers?: boolean;
+  free_shipping?: boolean;
+  buy_box_winner?: {
+    seller_id?: number | string;
+    price?: number;
+    free_shipping?: boolean;
+  };
 }
 
 interface InspectedItem {
@@ -47,6 +59,8 @@ interface InspectedItem {
   permalink: string;
   thumbnail: string;
   condition: string;
+  status?: string;
+  has_active_offers?: boolean;
   listing_type_id: string;
   category_id: string;
   category_name?: string;
@@ -119,6 +133,8 @@ export default function ClientMarketRadar() {
   const [catalogResults, setCatalogResults] = useState<CatalogProduct[]>([]);
   const [catalogTotal, setCatalogTotal] = useState<number>(0);
   const [catalogLoading, setCatalogLoading] = useState<boolean>(false);
+  const [onlyActiveCatalog, setOnlyActiveCatalog] = useState<boolean>(false);
+  const [catalogStatusFilter, setCatalogStatusFilter] = useState<"all" | "active" | "inactive">("all");
 
   // State: Inspector
   const [inspectQuery, setInspectQuery] = useState<string>("MLA59925307");
@@ -212,14 +228,18 @@ export default function ClientMarketRadar() {
   }, [selectedCategory, selectedSubcategory]);
 
   // Handle Catalog Search
-  const handleCatalogSearch = async (e?: React.FormEvent) => {
+  const handleCatalogSearch = async (e?: React.FormEvent, forceOnlyActive?: boolean) => {
     if (e) e.preventDefault();
     if (!catalogQuery.trim()) return;
+
+    const useOnlyActive = forceOnlyActive !== undefined ? forceOnlyActive : onlyActiveCatalog;
 
     setCatalogLoading(true);
     setGlobalError(null);
     try {
-      const res = await fetch(`/api/market/catalog?q=${encodeURIComponent(catalogQuery.trim())}&limit=24`);
+      const res = await fetch(
+        `/api/market/catalog?q=${encodeURIComponent(catalogQuery.trim())}&limit=24&onlyActive=${useOnlyActive}`
+      );
       const data = await res.json();
       if (res.ok && data.success) {
         setCatalogResults(data.results || []);
@@ -231,6 +251,13 @@ export default function ClientMarketRadar() {
       setGlobalError(err instanceof Error ? err.message : "Error en búsqueda de catálogo");
     } finally {
       setCatalogLoading(false);
+    }
+  };
+
+  const toggleOnlyActive = (checked: boolean) => {
+    setOnlyActiveCatalog(checked);
+    if (catalogQuery.trim()) {
+      handleCatalogSearch(undefined, checked);
     }
   };
 
@@ -677,38 +704,61 @@ export default function ClientMarketRadar() {
               Consultá los productos universales estandarizados del catálogo de Mercado Libre (marcas, modelos y fichas técnicas globales) sin restricciones de scraping.
             </p>
 
-            <form onSubmit={handleCatalogSearch} className="flex gap-3">
-              <div className="relative flex-1">
-                <span className="material-symbols-outlined absolute left-3.5 top-3 text-slate-400">
-                  search
-                </span>
-                <input
-                  type="text"
-                  placeholder="Ingresá nombre, marca o modelo (ej: iPhone 13, Taladro Inalámbrico Bosch, Smart TV 50)..."
-                  value={catalogQuery}
-                  onChange={(e) => setCatalogQuery(e.target.value)}
-                  className="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
-                />
+            <form onSubmit={handleCatalogSearch} className="space-y-3">
+              <div className="flex gap-3">
+                <div className="relative flex-1">
+                  <span className="material-symbols-outlined absolute left-3.5 top-3 text-slate-400">
+                    search
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Ingresá nombre, marca o modelo (ej: iPhone 13, Taladro Inalámbrico Bosch, Smart TV 50)..."
+                    value={catalogQuery}
+                    onChange={(e) => setCatalogQuery(e.target.value)}
+                    className="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                  />
+                </div>
+
+                <button
+                  id="catalog-search-btn"
+                  type="submit"
+                  disabled={catalogLoading || !catalogQuery.trim()}
+                  className="px-6 py-2.5 bg-midnight text-white text-sm font-semibold rounded-xl hover:bg-midnight/90 disabled:opacity-50 transition flex items-center gap-2"
+                >
+                  {catalogLoading ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>Buscando...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="material-symbols-outlined text-sm">search</span>
+                      <span>Buscar Catálogo</span>
+                    </>
+                  )}
+                </button>
               </div>
 
-              <button
-                id="catalog-search-btn"
-                type="submit"
-                disabled={catalogLoading || !catalogQuery.trim()}
-                className="px-6 py-2.5 bg-midnight text-white text-sm font-semibold rounded-xl hover:bg-midnight/90 disabled:opacity-50 transition flex items-center gap-2"
-              >
-                {catalogLoading ? (
-                  <>
-                    <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    <span>Buscando...</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="material-symbols-outlined text-sm">search</span>
-                    <span>Buscar Catálogo</span>
-                  </>
+              {/* Filtro: Solo publicaciones y ofertas activas */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100">
+                <label className="flex items-center gap-2 cursor-pointer select-none text-xs font-semibold text-slate-700 bg-slate-50 hover:bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 transition">
+                  <input
+                    type="checkbox"
+                    checked={onlyActiveCatalog}
+                    onChange={(e) => toggleOnlyActive(e.target.checked)}
+                    className="w-4 h-4 text-amber-500 rounded border-slate-300 focus:ring-amber-500 cursor-pointer"
+                  />
+                  <span className="flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-sm text-emerald-600">verified</span>
+                    <span>Solo productos con ofertas activas y precio real (excluir fichas pausadas o sin stock)</span>
+                  </span>
+                </label>
+                {catalogTotal > 0 && (
+                  <span className="text-xs text-slate-400 font-medium">
+                    {onlyActiveCatalog ? "Mostrando únicamente productos con ofertas vigentes" : "Mostrando catálogo completo"}
+                  </span>
                 )}
-              </button>
+              </div>
             </form>
           </div>
 
@@ -716,96 +766,275 @@ export default function ClientMarketRadar() {
           {catalogLoading ? (
             <div className="bg-white p-12 rounded-2xl border border-slate-muted/20 text-center space-y-3">
               <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto" />
-              <p className="text-sm text-slate-muted">Explorando el catálogo oficial de Mercado Libre...</p>
+              <p className="text-sm text-slate-muted">Explorando el catálogo oficial de Mercado Libre y verificando ofertas activas...</p>
             </div>
           ) : catalogResults.length > 0 ? (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h4 className="text-sm font-bold text-slate-700">
-                  Resultados encontrados ({catalogTotal} productos en catálogo)
-                </h4>
-              </div>
+            (() => {
+              const activeCount = catalogResults.filter((p) => p.has_active_offers && (p.price || 0) > 0).length;
+              const inactiveCount = catalogResults.length - activeCount;
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {catalogResults.map((product) => {
-                  const image = product.pictures?.[0]?.url || "";
-                  return (
-                    <div
-                      key={product.id}
-                      className="bg-white p-5 rounded-2xl border border-slate-muted/20 shadow-sm hover:shadow-md transition flex flex-col justify-between"
-                    >
-                      <div className="space-y-3">
-                        <div className="h-44 w-full bg-slate-50 rounded-xl overflow-hidden flex items-center justify-center p-2 relative">
-                          {image ? (
-                            <Image
-                              src={formatImgUrl(image)}
-                              alt={product.name}
-                              fill
-                              unoptimized
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                              className="object-contain p-2"
-                            />
-                          ) : (
-                            <span className="material-symbols-outlined text-4xl text-slate-300">
-                              image_not_supported
-                            </span>
-                          )}
-                          <span className="absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded-md bg-midnight/80 text-white backdrop-blur-sm">
-                            {product.domain_id?.replace("MLA-", "") || "CATÁLOGO"}
-                          </span>
-                        </div>
+              const filteredCatalogResults = catalogResults.filter((product) => {
+                const hasPrice = product.has_active_offers && (product.price || 0) > 0;
+                if (catalogStatusFilter === "active") return hasPrice;
+                if (catalogStatusFilter === "inactive") return !hasPrice;
+                return true;
+              });
 
-                        <div>
-                          <h4 className="text-sm font-bold text-midnight line-clamp-2" title={product.name}>
-                            {product.name}
-                          </h4>
-                          <p className="text-xs text-slate-400 mt-1 font-mono">ID: {product.id}</p>
-                        </div>
-
-                        {product.attributes && product.attributes.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5 pt-1">
-                            {product.attributes.slice(0, 3).map((attr) => (
-                              <span
-                                key={attr.id}
-                                className="text-[10px] px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 font-medium"
-                              >
-                                {attr.name}: {attr.value_name}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="pt-4 mt-3 border-t border-slate-muted/10 flex items-center justify-between">
-                        <button
-                          onClick={() => {
-                            setInspectQuery(product.id);
-                            setActiveTab("inspector");
-                            handleInspect(product.id);
-                          }}
-                          className="text-xs font-semibold text-amber-600 hover:text-amber-800 flex items-center gap-1"
-                        >
-                          <span className="material-symbols-outlined text-xs">troubleshoot</span>
-                          <span>Inspeccionar Ficha</span>
-                        </button>
-
-                        {product.permalink && (
-                          <a
-                            href={product.permalink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-xs font-medium text-slate-400 hover:text-midnight flex items-center gap-1"
-                          >
-                            <span>Ficha ML</span>
-                            <span className="material-symbols-outlined text-xs">open_in_new</span>
-                          </a>
-                        )}
-                      </div>
+              return (
+                <div className="space-y-4">
+                  {/* Filter Pills and Summary */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-2xl border border-slate-muted/20 shadow-sm">
+                    <div>
+                      <h4 className="text-sm font-bold text-midnight">
+                        Resultados encontrados ({catalogResults.length} publicaciones analizadas)
+                      </h4>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        <span className="font-semibold text-emerald-700">{activeCount} activas con precio real</span> •{" "}
+                        <span className="font-semibold text-rose-600">{inactiveCount} sin precio (pausadas o sin stock)</span>
+                      </p>
                     </div>
-                  );
-                })}
-              </div>
-            </div>
+
+                    {/* Filter Pills */}
+                    <div className="flex flex-wrap items-center gap-1.5 bg-slate-100 p-1 rounded-xl text-xs font-semibold">
+                      <button
+                        type="button"
+                        onClick={() => setCatalogStatusFilter("all")}
+                        className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 ${
+                          catalogStatusFilter === "all"
+                            ? "bg-white text-midnight shadow-sm font-bold"
+                            : "text-slate-600 hover:text-midnight"
+                        }`}
+                      >
+                        <span>Ver Todos</span>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-200 text-slate-700">
+                          {catalogResults.length}
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setCatalogStatusFilter("active")}
+                        className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 ${
+                          catalogStatusFilter === "active"
+                            ? "bg-emerald-600 text-white shadow-sm font-bold"
+                            : "text-emerald-700 hover:bg-emerald-50"
+                        }`}
+                      >
+                        <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                        <span>🟢 Con Precio Activo</span>
+                        <span
+                          className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                            catalogStatusFilter === "active"
+                              ? "bg-emerald-700 text-white"
+                              : "bg-emerald-100 text-emerald-800"
+                          }`}
+                        >
+                          {activeCount}
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setCatalogStatusFilter("inactive")}
+                        className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 ${
+                          catalogStatusFilter === "inactive"
+                            ? "bg-rose-600 text-white shadow-sm font-bold"
+                            : "text-rose-700 hover:bg-rose-50"
+                        }`}
+                      >
+                        <span className="w-2 h-2 rounded-full bg-rose-400" />
+                        <span>⚪ Sin Precio ($0)</span>
+                        <span
+                          className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                            catalogStatusFilter === "inactive"
+                              ? "bg-rose-700 text-white"
+                              : "bg-rose-100 text-rose-800"
+                          }`}
+                        >
+                          {inactiveCount}
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {filteredCatalogResults.length === 0 ? (
+                    <div className="bg-white p-8 rounded-2xl border border-slate-200 text-center text-slate-500">
+                      <p className="text-sm font-semibold">No hay publicaciones para el filtro seleccionado.</p>
+                      <button
+                        onClick={() => setCatalogStatusFilter("all")}
+                        className="mt-2 text-xs text-amber-600 hover:underline font-bold"
+                      >
+                        Ver todos los resultados ({catalogResults.length})
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {filteredCatalogResults.map((product) => {
+                        const image = product.pictures?.[0]?.url || "";
+                        const hasPrice = product.has_active_offers && (product.price || 0) > 0;
+
+                        return (
+                          <div
+                            key={product.id}
+                            className={`p-5 rounded-2xl border shadow-sm hover:shadow-md transition flex flex-col justify-between ${
+                              hasPrice
+                                ? "bg-white border-emerald-300 hover:border-emerald-500 ring-1 ring-emerald-500/10"
+                                : "bg-slate-50/70 border-slate-200 hover:border-slate-300 opacity-90 hover:opacity-100"
+                            }`}
+                          >
+                            <div className="space-y-3">
+                              {/* Product Image with Prominent Status Badge */}
+                              <div className="h-48 w-full bg-slate-50 rounded-xl overflow-hidden flex items-center justify-center p-2 relative border border-slate-100">
+                                {image ? (
+                                  <Image
+                                    src={formatImgUrl(image)}
+                                    alt={product.name}
+                                    fill
+                                    unoptimized
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    className="object-contain p-2"
+                                  />
+                                ) : (
+                                  <span className="material-symbols-outlined text-4xl text-slate-300">
+                                    image_not_supported
+                                  </span>
+                                )}
+
+                                {/* Category Tag */}
+                                <span className="absolute top-2.5 left-2.5 text-[10px] font-bold px-2 py-0.5 rounded-md bg-midnight/80 text-white backdrop-blur-sm shadow-sm">
+                                  {product.domain_id?.replace("MLA-", "") || "CATÁLOGO"}
+                                </span>
+
+                                {/* PROMINENT STATUS BADGE (Top-Right) */}
+                                {hasPrice ? (
+                                  <span className="absolute top-2.5 right-2.5 text-[10px] font-extrabold px-2.5 py-1 rounded-lg bg-emerald-600 text-white shadow-md flex items-center gap-1.5 animate-in fade-in">
+                                    <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                                    <span>CON PRECIO ACTIVO</span>
+                                  </span>
+                                ) : (
+                                  <span className="absolute top-2.5 right-2.5 text-[10px] font-bold px-2.5 py-1 rounded-lg bg-rose-600 text-white shadow-sm flex items-center gap-1">
+                                    <span className="material-symbols-outlined text-[13px]">block</span>
+                                    <span>SIN PRECIO ($0)</span>
+                                  </span>
+                                )}
+                              </div>
+
+                              {/* Title & Product ID */}
+                              <div>
+                                <h4 className="text-sm font-bold text-midnight line-clamp-2" title={product.name}>
+                                  {product.name}
+                                </h4>
+                                <p className="text-xs text-slate-400 mt-1 font-mono">ID: {product.id}</p>
+                              </div>
+
+                              {/* Price and Active Competitors Summary */}
+                              {hasPrice ? (
+                                <div className="bg-emerald-50 border border-emerald-200/90 rounded-xl p-3 flex items-center justify-between">
+                                  <div>
+                                    <span className="text-[10px] font-extrabold text-emerald-800 uppercase tracking-wide block">
+                                      🟢 Precio de Venta
+                                    </span>
+                                    <strong className="text-lg font-black text-midnight">
+                                      {formatCurrency(product.price || 0, product.currency_id || "ARS")}
+                                    </strong>
+                                  </div>
+                                  <div className="text-right flex flex-col items-end gap-0.5">
+                                    {product.total_offers && product.total_offers > 0 ? (
+                                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-100/90 px-2 py-0.5 rounded-md">
+                                        <span className="material-symbols-outlined text-[13px]">groups</span>
+                                        <span>
+                                          {product.total_offers}{" "}
+                                          {product.total_offers === 1 ? "vendedor" : "vendedores"}
+                                        </span>
+                                      </span>
+                                    ) : null}
+                                    {product.free_shipping && (
+                                      <span className="text-[10px] font-bold text-emerald-600 flex items-center gap-0.5">
+                                        <span className="material-symbols-outlined text-[12px]">local_shipping</span>
+                                        <span>Envío Gratis</span>
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                              ) : (
+                                <div className="bg-rose-50/80 border border-rose-200/90 rounded-xl p-3 flex items-start gap-2.5 text-xs">
+                                  <span className="material-symbols-outlined text-rose-500 text-lg mt-0.5 flex-shrink-0">
+                                    do_not_disturb_on
+                                  </span>
+                                  <div>
+                                    <strong className="font-bold text-rose-800 block">
+                                      Sin Ofertas ni Precio ($0)
+                                    </strong>
+                                    <span className="text-[11px] text-rose-700/90 leading-tight block mt-0.5">
+                                      Publicación pausada o ficha técnica sin vendedores activos actualmente en Mercado Libre.
+                                    </span>
+                                  </div>
+                                </div>
+                              )}
+
+                              {product.attributes && product.attributes.length > 0 && (
+                                <div className="flex flex-wrap gap-1.5 pt-1">
+                                  {product.attributes.slice(0, 3).map((attr) => (
+                                    <span
+                                      key={attr.id}
+                                      className="text-[10px] px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 font-medium"
+                                    >
+                                      {attr.name}: {attr.value_name}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Card Footer Actions */}
+                            <div className="pt-4 mt-3 border-t border-slate-muted/10 flex items-center justify-between">
+                              {hasPrice ? (
+                                <button
+                                  onClick={() => {
+                                    setInspectQuery(product.id);
+                                    setActiveTab("inspector");
+                                    handleInspect(product.id);
+                                  }}
+                                  className="text-xs font-bold text-white bg-midnight hover:bg-midnight/90 px-3.5 py-2 rounded-xl flex items-center gap-1.5 shadow-sm transition"
+                                >
+                                  <span className="material-symbols-outlined text-xs">troubleshoot</span>
+                                  <span>Inspeccionar Precio y Ventas</span>
+                                </button>
+                              ) : (
+                                <button
+                                  onClick={() => {
+                                    setInspectQuery(product.id);
+                                    setActiveTab("inspector");
+                                    handleInspect(product.id);
+                                  }}
+                                  className="text-xs font-semibold text-slate-500 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-xl border border-slate-200 flex items-center gap-1.5 transition"
+                                  title="Esta ficha no tiene vendedores activos ni precio vigente"
+                                >
+                                  <span className="material-symbols-outlined text-xs text-slate-400">info</span>
+                                  <span>Ficha sin precio ($0)</span>
+                                </button>
+                              )}
+
+                              {product.permalink && (
+                                <a
+                                  href={product.permalink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-xs font-medium text-slate-400 hover:text-midnight flex items-center gap-1"
+                                >
+                                  <span>Ficha ML</span>
+                                  <span className="material-symbols-outlined text-xs">open_in_new</span>
+                                </a>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })()
           ) : (
             <div className="bg-white p-12 rounded-2xl border border-slate-muted/20 text-center text-slate-muted">
               <span className="material-symbols-outlined text-4xl text-slate-300 mb-2">manage_search</span>
@@ -1007,6 +1236,26 @@ export default function ClientMarketRadar() {
                       {inspectedItem.title}
                     </h2>
                   </div>
+
+                  {/* Status Banner when inactive, paused or catalog-only */}
+                  {(!inspectedItem.has_active_offers || inspectedItem.status === "paused" || inspectedItem.status === "closed" || inspectedItem.status === "without_stock") && (
+                    <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-2.5 text-xs text-amber-900">
+                      <span className="material-symbols-outlined text-amber-600 text-base mt-0.5 flex-shrink-0">
+                        warning
+                      </span>
+                      <div className="leading-relaxed">
+                        <strong className="font-bold">Aviso de disponibilidad:</strong> Esta publicación o ficha técnica se encuentra actualmente{" "}
+                        <span className="font-bold underline">
+                          {inspectedItem.status === "paused"
+                            ? "Pausada por el vendedor"
+                            : inspectedItem.status === "closed"
+                            ? "Finalizada en Mercado Libre"
+                            : "sin vendedores ni ofertas activas con stock"}
+                        </span>
+                        . Las métricas reflejan el último registro disponible o la ficha técnica maestra del catálogo.
+                      </div>
+                    </div>
+                  )}
 
                   {/* KPI Metrics Cards */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
